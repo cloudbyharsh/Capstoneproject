@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FAF7F0;
+  --foreground: #2C1608;
+  --gold:        #C4922A;
+  --maroon:      #610000;
+  --saffron:     #E8621A;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-dm-sans), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  h1, h2, h3 {
+    font-family: var(--font-playfair), Georgia, serif;
+  }
+  h4, h5, h6 {
+    font-family: var(--font-dm-sans), Arial, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .section-pad {
+    @apply py-section px-4 md:px-12;
+  }
+
+  .layout-container {
+    @apply max-w-layout mx-auto w-full;
+  }
+
+  .gold-divider {
+    @apply w-16 h-0.5 bg-gold mx-auto;
+  }
+}

@@ -1,0 +1,154 @@
+[
+  {
+    "id": "p1",
+    "name": "Pandit Ravi Sharma",
+    "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    "verified": true,
+    "rating": 4.9,
+    "reviewCount": 142,
+    "specialties": ["Puja Ceremonies", "Griha Pravesh", "Satyanarayan Katha"],
+    "bio": "With over 20 years of experience performing sacred Vedic rituals, Pandit Ravi Sharma brings authentic tradition to every ceremony. Trained at the renowned Kashi Vishwanath Vedic School, he specializes in creating spiritually meaningful experiences for families across the diaspora.",
+    "serviceIds": ["s1", "s2", "s3"],
+    "location": "Toronto, ON",
+    "yearsExperience": 20,
+    "languages": ["Hindi", "English", "Sanskrit"],
+    "reviews": [
+      {
+        "id": "r1",
+        "author": "Priya Mehta",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-11-15",
+        "text": "Pandit Ravi performed our Griha Pravesh with such devotion and clarity. He explained every step, making it meaningful for our whole family, including those who had never witnessed such rituals."
+      },
+      {
+        "id": "r2",
+        "author": "Amit Patel",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-10-08",
+        "text": "Incredibly professional and knowledgeable. The Satyanarayan Katha was performed beautifully. Highly recommend for any family puja."
+      },
+      {
+        "id": "r3",
+        "author": "Sunita Kapoor",
+        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-09-20",
+        "text": "We've used Devly twice now and Pandit Ravi is exceptional. His energy is calming and sacred. Our kids actually stayed engaged the whole time."
+      }
+    ]
+  },
+  {
+    "id": "p2",
+    "name": "Jyotish Acharya Deepak",
+    "photo": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+    "verified": true,
+    "rating": 4.8,
+    "reviewCount": 89,
+    "specialties": ["Vedic Astrology", "Kundali Matching", "Career Guidance"],
+    "bio": "Acharya Deepak is a third-generation Jyotish practitioner with deep expertise in Parashari astrology. He offers profound insights into life's key transitions — marriage, career, health, and spiritual evolution — using your birth chart as a map.",
+    "serviceIds": ["s4", "s5"],
+    "location": "Mississauga, ON",
+    "yearsExperience": 15,
+    "languages": ["Hindi", "English", "Gujarati"],
+    "reviews": [
+      {
+        "id": "r4",
+        "author": "Neha Shah",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-11-02",
+        "text": "The Kundali matching session gave us so much clarity before our wedding. Acharya Deepak is thoughtful, non-judgmental, and very precise."
+      },
+      {
+        "id": "r5",
+        "author": "Rajesh Kumar",
+        "avatar": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-10-25",
+        "text": "His career consultation was eye-opening. I had been stuck for months and the session helped me see my path with much more confidence."
+      }
+    ]
+  },
+  {
+    "id": "p3",
+    "name": "Vastu Vidushi Meena",
+    "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop",
+    "verified": true,
+    "rating": 4.7,
+    "reviewCount": 56,
+    "specialties": ["Vastu Shastra", "Home Harmonization", "Office Design"],
+    "bio": "Meena Ji is a certified Vastu consultant trained in classical Vastu Shastra principles. She helps families and businesses align their spaces with natural energies, creating environments that support prosperity, harmony, and well-being.",
+    "serviceIds": ["s6", "s7"],
+    "location": "Brampton, ON",
+    "yearsExperience": 12,
+    "languages": ["Hindi", "English", "Marathi"],
+    "reviews": [
+      {
+        "id": "r6",
+        "author": "Kavita Desai",
+        "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-10-15",
+        "text": "After Meena Ji's consultation, we made small changes to our home layout and the shift in energy was noticeable within weeks. Highly recommend."
+      }
+    ]
+  },
+  {
+    "id": "p4",
+    "name": "Swami Prakash Ananda",
+    "photo": "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=400&h=400&fit=crop",
+    "verified": true,
+    "rating": 4.9,
+    "reviewCount": 203,
+    "specialties": ["Guided Meditation", "Havan Ceremonies", "Spiritual Counselling"],
+    "bio": "Swami Prakash Ananda has dedicated 25 years to the practice and teaching of Vedic meditation and fire ceremonies. His sessions blend ancient wisdom with modern accessibility, offering profound inner experiences for seekers at all levels.",
+    "serviceIds": ["s8", "s9", "s10"],
+    "location": "Oakville, ON",
+    "yearsExperience": 25,
+    "languages": ["Hindi", "English", "Sanskrit"],
+    "reviews": [
+      {
+        "id": "r7",
+        "author": "Anika Verma",
+        "avatar": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-11-20",
+        "text": "The group meditation session was transformative. Swami Ji has a presence that immediately puts you at ease. I left feeling genuinely renewed."
+      },
+      {
+        "id": "r8",
+        "author": "Vikram Nair",
+        "avatar": "https://images.unsplash.com/photo-1463453091185-61582044d556?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-11-05",
+        "text": "We booked the Havan for Diwali and it was the highlight of our celebration. Every family member was moved. This is what Devly is for."
+      }
+    ]
+  },
+  {
+    "id": "p5",
+    "name": "Dr. Sujata Iyengar",
+    "photo": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop",
+    "verified": true,
+    "rating": 4.8,
+    "reviewCount": 74,
+    "specialties": ["Ayurvedic Consultation", "Wellness Planning", "Herbal Remedies"],
+    "bio": "Dr. Sujata is an Ayurvedic practitioner with dual degrees in Ayurvedic Medicine (BAMS) and integrative nutrition. She offers personalized wellness consultations rooted in the ancient science of life — helping clients align diet, lifestyle, and habits with their natural constitution.",
+    "serviceIds": [],
+    "location": "Markham, ON",
+    "yearsExperience": 10,
+    "languages": ["Tamil", "Hindi", "English"],
+    "reviews": [
+      {
+        "id": "r9",
+        "author": "Divya Krishnan",
+        "avatar": "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-10-30",
+        "text": "Dr. Sujata's Ayurvedic consultation completely changed how I think about my health. Finally someone who treats the whole person, not just symptoms."
+      }
+    ]
+  }
+]
