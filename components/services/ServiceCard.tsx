@@ -1,8 +1,26 @@
+"use client";
+
 import Link from "next/link";
 import { Clock } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 import StarRating from "@/components/ui/StarRating";
 import { Service, Provider } from "@/lib/types";
+
+const CATEGORY_ICONS: Record<string, string> = {
+  Puja: "🪔",
+  Astrology: "🌙",
+  Vastu: "🏡",
+  Meditation: "🧘",
+  Havan: "🔥",
+};
+
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  Puja: "from-amber-50 to-orange-100",
+  Astrology: "from-indigo-50 to-purple-100",
+  Vastu: "from-green-50 to-emerald-100",
+  Meditation: "from-teal-50 to-cyan-100",
+  Havan: "from-red-50 to-orange-100",
+};
 
 interface ServiceCardProps {
   service: Service;
@@ -10,6 +28,20 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service, provider }: ServiceCardProps) {
+  const icon = CATEGORY_ICONS[service.category] ?? "🕉️";
+  const gradient = CATEGORY_GRADIENTS[service.category] ?? "from-amber-50 to-yellow-100";
+
+  function handleImgError(e: React.SyntheticEvent<HTMLImageElement>) {
+    const target = e.currentTarget;
+    target.style.display = "none";
+    const fallback = target.nextElementSibling as HTMLElement | null;
+    if (fallback) fallback.style.display = "flex";
+  }
+
+  function handleAvatarError(e: React.SyntheticEvent<HTMLImageElement>) {
+    e.currentTarget.style.display = "none";
+  }
+
   return (
     <Link href={`/services/${service.id}`} className="block group">
       <div className="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden h-full flex flex-col">
@@ -18,7 +50,15 @@ export default function ServiceCard({ service, provider }: ServiceCardProps) {
             src={service.image}
             alt={service.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={handleImgError}
           />
+          {/* Fallback shown when image fails to load */}
+          <div
+            style={{ display: "none" }}
+            className={`w-full h-full items-center justify-center bg-gradient-to-br ${gradient} absolute inset-0`}
+          >
+            <span className="text-6xl">{icon}</span>
+          </div>
           <div className="absolute top-3 left-3">
             <Badge category={service.category}>{service.category}</Badge>
           </div>
@@ -50,6 +90,7 @@ export default function ServiceCard({ service, provider }: ServiceCardProps) {
                 src={provider.photo}
                 alt={provider.name}
                 className="w-7 h-7 rounded-full object-cover"
+                onError={handleAvatarError}
               />
               <span className="font-label text-label-sm text-charcoal-muted">{provider.name}</span>
               {provider.verified && (

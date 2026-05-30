@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
 import CategoryRow from "@/components/home/CategoryRow";
 import FeaturedServices from "@/components/home/FeaturedServices";
@@ -5,15 +9,37 @@ import HowItWorks from "@/components/home/HowItWorks";
 import Testimonials from "@/components/home/Testimonials";
 import PanchangWidget from "@/components/home/PanchangWidget";
 
+// Load intro screen only client-side to avoid SSR flash
+const IntroScreen = dynamic(() => import("@/components/home/IntroScreen"), { ssr: false });
+
 export default function Home() {
+  const [introComplete, setIntroComplete] = useState(false);
+
   return (
     <>
-      <Hero />
-      <PanchangWidget />
-      <CategoryRow />
-      <FeaturedServices />
-      <HowItWorks />
-      <Testimonials />
+      {/* Intro experience — only shown once per session */}
+      <IntroScreen onComplete={() => setIntroComplete(true)} />
+
+      {/* Main site fades in after intro */}
+      <div
+        style={{
+          opacity: introComplete ? 1 : 0,
+          transition: "opacity 0.8s ease",
+          pointerEvents: introComplete ? "auto" : "none",
+        }}
+      >
+        <Hero />
+        {/* Categories first — immediate value clarity */}
+        <CategoryRow />
+        {/* Featured services — validate quality */}
+        <FeaturedServices />
+        {/* How it works — explain the process */}
+        <HowItWorks />
+        {/* Social proof */}
+        <Testimonials />
+        {/* Panchang last — power-user daily feature */}
+        <PanchangWidget />
+      </div>
     </>
   );
 }
