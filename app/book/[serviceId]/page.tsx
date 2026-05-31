@@ -4,8 +4,9 @@ import { ArrowLeft } from "lucide-react";
 import { getService, getProvider } from "@/lib/utils";
 import BookingClient from "./BookingClient";
 
-export default function BookingPage({ params }: { params: { serviceId: string } }) {
-  const service = getService(params.serviceId);
+export default async function BookingPage({ params }: { params: Promise<{ serviceId: string }> }) {
+  const { serviceId } = await params;
+  const service = getService(serviceId);
   if (!service) notFound();
 
   const provider = getProvider(service.providerId);

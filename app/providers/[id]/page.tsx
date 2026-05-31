@@ -5,8 +5,9 @@ import { getProvider, getProviderServices } from "@/lib/utils";
 import StarRating from "@/components/ui/StarRating";
 import ServiceCard from "@/components/services/ServiceCard";
 
-export default function ProviderProfilePage({ params }: { params: { id: string } }) {
-  const provider = getProvider(params.id);
+export default async function ProviderProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const provider = getProvider(id);
   if (!provider) notFound();
 
   const providerServices = getProviderServices(provider.id);

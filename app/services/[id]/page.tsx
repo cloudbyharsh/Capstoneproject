@@ -6,8 +6,9 @@ import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import StarRating from "@/components/ui/StarRating";
 
-export default function ServiceDetailPage({ params }: { params: { id: string } }) {
-  const service = getService(params.id);
+export default async function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const service = getService(id);
   if (!service) notFound();
 
   const provider = getProvider(service.providerId);
