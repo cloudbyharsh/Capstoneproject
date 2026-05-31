@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Clock } from "lucide-react";
-import Badge from "@/components/ui/Badge";
 import StarRating from "@/components/ui/StarRating";
 import { Service, Provider } from "@/lib/types";
 
@@ -14,12 +14,12 @@ const CATEGORY_ICONS: Record<string, string> = {
   Havan: "🔥",
 };
 
-const CATEGORY_GRADIENTS: Record<string, string> = {
-  Puja: "from-amber-50 to-orange-100",
-  Astrology: "from-indigo-50 to-purple-100",
-  Vastu: "from-green-50 to-emerald-100",
-  Meditation: "from-teal-50 to-cyan-100",
-  Havan: "from-red-50 to-orange-100",
+const CATEGORY_COLORS: Record<string, string> = {
+  Puja:       "bg-saffron-tint text-saffron",
+  Astrology:  "bg-teal-light text-teal",
+  Vastu:      "bg-ivory-dark text-charcoal-muted",
+  Meditation: "bg-teal-light text-teal",
+  Havan:      "bg-lotus-light text-lotus",
 };
 
 interface ServiceCardProps {
@@ -29,75 +29,75 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ service, provider }: ServiceCardProps) {
   const icon = CATEGORY_ICONS[service.category] ?? "🕉️";
-  const gradient = CATEGORY_GRADIENTS[service.category] ?? "from-amber-50 to-yellow-100";
-
-  function handleImgError(e: React.SyntheticEvent<HTMLImageElement>) {
-    const target = e.currentTarget;
-    target.style.display = "none";
-    const fallback = target.nextElementSibling as HTMLElement | null;
-    if (fallback) fallback.style.display = "flex";
-  }
-
-  function handleAvatarError(e: React.SyntheticEvent<HTMLImageElement>) {
-    e.currentTarget.style.display = "none";
-  }
+  const catColor = CATEGORY_COLORS[service.category] ?? "bg-ivory-dark text-charcoal-muted";
 
   return (
     <Link href={`/services/${service.id}`} className="block group">
-      <div className="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden h-full flex flex-col">
-        <div className="relative overflow-hidden h-52">
-          <img
+      <div className="bg-white rounded-card border border-ivory-dark hover:border-saffron/30 shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden h-full flex flex-col">
+
+        {/* Image */}
+        <div className="relative h-48 overflow-hidden bg-ivory-dark">
+          <Image
             src={service.image}
             alt={service.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            onError={handleImgError}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          {/* Fallback shown when image fails to load */}
-          <div
-            style={{ display: "none" }}
-            className={`w-full h-full items-center justify-center bg-gradient-to-br ${gradient} absolute inset-0`}
-          >
-            <span className="text-6xl">{icon}</span>
+          {/* Category pill — bottom left */}
+          <div className={`absolute bottom-3 left-3 font-label text-label-sm font-semibold px-3 py-1 rounded-pill ${catColor}`}>
+            {service.category}
           </div>
-          <div className="absolute top-3 left-3">
-            <Badge category={service.category}>{service.category}</Badge>
-          </div>
-          <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-pill px-3 py-1">
-            <span className="font-headline font-bold text-label-md text-charcoal">${service.price}</span>
+          {/* Price — top right */}
+          <div className="absolute top-3 right-3 bg-white/95 rounded-pill px-3 py-1">
+            <span className="font-headline font-bold text-label-md text-charcoal">
+              ${service.price}
+            </span>
           </div>
         </div>
 
-        <div className="p-card-pad flex flex-col flex-1">
-          <h3 className="font-headline font-semibold text-heading-md text-charcoal mb-2 group-hover:text-maroon transition-colors duration-300">
+        {/* Body */}
+        <div className="p-5 flex flex-col flex-1">
+          <h3 className="font-headline font-semibold text-heading-sm text-charcoal mb-2 group-hover:text-maroon transition-colors duration-300 line-clamp-2">
             {service.title}
           </h3>
-
-          <p className="font-body text-label-md text-charcoal-muted line-clamp-2 mb-4 flex-1">
+          <p className="font-body text-label-md text-charcoal-muted line-clamp-2 mb-4 flex-1 leading-relaxed">
             {service.description}
           </p>
 
-          <div className="flex items-center gap-4 mb-3">
+          {/* Meta row */}
+          <div className="flex items-center gap-3 mb-4">
             <StarRating rating={service.rating} count={service.reviewCount} />
             <div className="flex items-center gap-1 text-charcoal-subtle">
-              <Clock size={13} />
+              <Clock size={12} />
               <span className="font-label text-label-sm">{service.duration}</span>
             </div>
           </div>
 
-          {provider && (
-            <div className="flex items-center gap-2 pt-3 border-t border-ivory-dark">
-              <img
-                src={provider.photo}
-                alt={provider.name}
-                className="w-7 h-7 rounded-full object-cover"
-                onError={handleAvatarError}
-              />
-              <span className="font-label text-label-sm text-charcoal-muted">{provider.name}</span>
-              {provider.verified && (
-                <span className="ml-auto text-gold text-label-sm">✓ Verified</span>
-              )}
-            </div>
-          )}
+          {/* Footer */}
+          <div className="flex items-center justify-between pt-3 border-t border-ivory-dark">
+            {provider ? (
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="relative w-7 h-7 rounded-full overflow-hidden bg-ivory-dark flex-shrink-0">
+                  <Image
+                    src={provider.photo}
+                    alt={provider.name}
+                    fill
+                    sizes="28px"
+                    className="object-cover"
+                  />
+                </div>
+                <span className="font-label text-label-sm text-charcoal-muted truncate">
+                  {provider.name}
+                </span>
+              </div>
+            ) : (
+              <div />
+            )}
+            <span className="font-label text-label-sm font-semibold text-saffron bg-saffron-tint px-3 py-1.5 rounded-btn flex-shrink-0 group-hover:bg-saffron group-hover:text-white transition-colors duration-300">
+              Book →
+            </span>
+          </div>
         </div>
       </div>
     </Link>
