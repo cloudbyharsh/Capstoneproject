@@ -1,12 +1,12 @@
 import { CheckCircle2, Calendar, Home } from "lucide-react";
 import Button from "@/components/ui/Button";
 
-export default function ConfirmationPage({
+export default async function ConfirmationPage({
   searchParams,
 }: {
-  searchParams: { ref?: string; service?: string; date?: string; time?: string; name?: string; price?: string };
+  searchParams: Promise<{ ref?: string; service?: string; date?: string; time?: string; name?: string; price?: string }>;
 }) {
-  const { ref, service, date, time, name, price } = searchParams;
+  const { ref, service, date, time, name, price } = await searchParams;
 
   return (
     <div className="bg-ivory min-h-screen flex items-center justify-center py-20">

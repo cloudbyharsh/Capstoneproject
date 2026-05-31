@@ -1,13 +1,14 @@
 import { services, providers } from "@/lib/utils";
 import ServicesClient from "./ServicesClient";
 
-export default function ServicesPage({
+export default async function ServicesPage({
   searchParams,
 }: {
-  searchParams: { category?: string };
+  searchParams: Promise<{ category?: string }>;
 }) {
-  const initialCategory = searchParams.category
-    ? searchParams.category.charAt(0).toUpperCase() + searchParams.category.slice(1)
+  const { category } = await searchParams;
+  const initialCategory = category
+    ? category.charAt(0).toUpperCase() + category.slice(1)
     : "All";
 
   return (
