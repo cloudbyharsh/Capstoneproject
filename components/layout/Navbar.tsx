@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { href: "/services", label: "Browse Services" },
   { href: "/kundli", label: "Free Kundli" },
+  { href: "/soul-match", label: "Soul Match" },
   { href: "/panchang", label: "Panchang" },
   { href: "/providers", label: "Providers" },
 ];
