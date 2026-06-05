@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Sparkles, Lock, ChevronRight, AlertCircle, Download } from "lucide-react";
+import { Sparkles, Lock, ChevronRight, AlertCircle, Download, Mail, CheckCircle2 } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 interface FormData {
@@ -9,6 +9,8 @@ interface FormData {
   birthDate: string;
   birthTime: string;
   birthLocation: string;
+  email: string;
+  consent: boolean;
 }
 
 function MarkdownText({ text }: { text: string }) {
@@ -16,21 +18,16 @@ function MarkdownText({ text }: { text: string }) {
   return (
     <div className="space-y-2">
       {lines.map((line, i) => {
-        if (line.startsWith("### ")) {
+        if (line.startsWith("### "))
           return <h3 key={i} className="font-headline font-bold text-heading-md text-charcoal mt-5 mb-1">{line.slice(4)}</h3>;
-        }
-        if (line.startsWith("## ")) {
+        if (line.startsWith("## "))
           return <h2 key={i} className="font-headline font-bold text-heading-lg text-charcoal mt-6 mb-2">{line.slice(3)}</h2>;
-        }
-        if (line.startsWith("**") && line.endsWith("**")) {
+        if (line.startsWith("**") && line.endsWith("**"))
           return <p key={i} className="font-headline font-semibold text-body-md text-charcoal mt-4">{line.slice(2, -2)}</p>;
-        }
-        if (line === "---") {
+        if (line === "---")
           return <hr key={i} className="border-ivory-dark my-5" />;
-        }
-        if (line.startsWith("- ")) {
+        if (line.startsWith("- "))
           return <li key={i} className="font-body text-body-md text-charcoal-muted ml-4 list-disc">{line.slice(2).replace(/\*\*(.*?)\*\*/g, "$1")}</li>;
-        }
         if (line.trim() === "") return <div key={i} className="h-1" />;
         return (
           <p key={i} className="font-body text-body-md text-charcoal-muted leading-relaxed">
@@ -43,12 +40,20 @@ function MarkdownText({ text }: { text: string }) {
 }
 
 export default function KundliClient() {
-  const [form, setForm] = useState<FormData>({ name: "", birthDate: "", birthTime: "", birthLocation: "" });
+  const [form, setForm] = useState<FormData>({
+    name: "", birthDate: "", birthTime: "", birthLocation: "", email: "", consent: false,
+  });
   const [loading, setLoading] = useState(false);
   const [reading, setReading] = useState("");
   const [error, setError] = useState("");
   const [downloading, setDownloading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
+
+  function isValidEmail(email: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
   async function handleDownloadPDF() {
     if (!reportRef.current) return;
@@ -73,13 +78,46 @@ export default function KundliClient() {
     }
   }
 
-  const canSubmit = form.birthDate && form.birthTime && form.birthLocation;
+  async function sendReportEmail(fullReading: string) {
+    setSendingEmail(true);
+    try {
+      await fetch("/api/kundli/send-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: form.email,
+          name: form.name || "Seeker",
+          reading: fullReading,
+          birthDate: form.birthDate,
+          birthTime: form.birthTime,
+          birthLocation: form.birthLocation,
+        }),
+      });
+      setEmailSent(true);
+    } catch {
+      // Silent fail -- user can still download PDF
+    } finally {
+      setSendingEmail(false);
+    }
+  }
+
+  const canSubmit =
+    form.birthDate &&
+    form.birthTime &&
+    form.birthLocation &&
+    form.email &&
+    isValidEmail(form.email) &&
+    form.consent;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!form.consent) { setError("Please accept the consent checkbox to continue."); return; }
+    if (!isValidEmail(form.email)) { setError("Please enter a valid email address."); return; }
+
     setLoading(true);
     setReading("");
     setError("");
+    setEmailSent(false);
 
     try {
       const res = await fetch("/api/kundli", {
@@ -99,11 +137,16 @@ export default function KundliClient() {
       const decoder = new TextDecoder();
       if (!reader) return;
 
+      let fullText = "";
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        setReading((prev) => prev + decoder.decode(value));
+        const chunk = decoder.decode(value);
+        fullText += chunk;
+        setReading((prev) => prev + chunk);
       }
+
+      await sendReportEmail(fullText);
     } catch {
       setError("Could not connect to the AI. Please try again.");
     } finally {
@@ -117,7 +160,7 @@ export default function KundliClient() {
       <div className="lg:col-span-2">
         <div className="bg-white rounded-card shadow-card p-6 sticky top-24">
           <div className="flex items-center gap-2 mb-5">
-            <div className="w-8 h-8 bg-saffron-tint rounded-full flex items-center justify-center text-base">🔯</div>
+            <div className="w-8 h-8 bg-saffron-tint rounded-full flex items-center justify-center text-base">&#128303;</div>
             <h2 className="font-headline font-semibold text-heading-md text-charcoal">Your Birth Details</h2>
           </div>
 
@@ -158,7 +201,7 @@ export default function KundliClient() {
                 className="w-full px-4 py-2.5 bg-ivory border border-ivory-dark rounded-btn font-label text-label-md text-charcoal focus:outline-none focus:border-saffron/60 focus:ring-2 focus:ring-saffron/10 transition-all duration-300"
               />
               <p className="font-label text-label-sm text-charcoal-subtle mt-1">
-                Approximate time is fine -- within 30 mins is sufficient for a basic reading
+                Approximate time is fine -- within 30 mins is sufficient
               </p>
             </div>
 
@@ -173,6 +216,55 @@ export default function KundliClient() {
                 placeholder="Mumbai, India"
                 className="w-full px-4 py-2.5 bg-ivory border border-ivory-dark rounded-btn font-label text-label-md text-charcoal placeholder:text-charcoal-subtle focus:outline-none focus:border-saffron/60 focus:ring-2 focus:ring-saffron/10 transition-all duration-300"
               />
+            </div>
+
+            {/* Email */}
+            <div className="pt-1">
+              <div className="h-px bg-ivory-dark mb-4" />
+              <label className="block font-label text-label-md text-charcoal-muted mb-1.5">
+                Email Address <span className="text-error">*</span>
+              </label>
+              <div className="relative">
+                <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-charcoal-subtle" />
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="priya@example.com"
+                  className="w-full pl-9 pr-4 py-2.5 bg-ivory border border-ivory-dark rounded-btn font-label text-label-md text-charcoal placeholder:text-charcoal-subtle focus:outline-none focus:border-saffron/60 focus:ring-2 focus:ring-saffron/10 transition-all duration-300"
+                />
+              </div>
+              <p className="font-label text-label-sm text-charcoal-subtle mt-1">
+                Your full report will be sent here
+              </p>
+            </div>
+
+            {/* Consent */}
+            <div className="bg-ivory rounded-btn p-3 border border-ivory-dark">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <div className="relative flex-shrink-0 mt-0.5">
+                  <input
+                    type="checkbox"
+                    checked={form.consent}
+                    onChange={(e) => setForm({ ...form, consent: e.target.checked })}
+                    className="sr-only"
+                  />
+                  <div
+                    className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all duration-200 ${
+                      form.consent ? "bg-maroon border-maroon" : "bg-white border-charcoal-subtle"
+                    }`}
+                  >
+                    {form.consent && (
+                      <svg className="w-2.5 h-2.5 text-ivory" fill="none" viewBox="0 0 10 10">
+                        <path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                <span className="font-label text-label-sm text-charcoal-muted leading-relaxed">
+                  I agree to receive my Kundli report and occasional astrology-related updates and offers via email. I can unsubscribe at any time.
+                </span>
+              </label>
             </div>
 
             {error && (
@@ -202,7 +294,7 @@ export default function KundliClient() {
             </Button>
 
             <p className="font-label text-label-sm text-charcoal-subtle text-center">
-              Free · No account required · Takes ~15 seconds
+              Free &middot; No credit card &middot; Takes ~15 seconds
             </p>
           </form>
         </div>
@@ -213,17 +305,17 @@ export default function KundliClient() {
         {!reading && !loading && (
           <div className="bg-white rounded-card shadow-card p-8 text-center h-full flex flex-col items-center justify-center min-h-[420px]">
             <div className="w-20 h-20 bg-saffron-tint rounded-full flex items-center justify-center text-3xl mb-5">
-              🌙
+              &#127771;
             </div>
             <h3 className="font-headline font-bold text-heading-md text-charcoal mb-2">Your Reading Awaits</h3>
             <p className="font-body text-body-md text-charcoal-muted max-w-sm">
-              Enter your birth details on the left and our AI -- trained on classical Vedic Jyotish principles -- will generate your free chart summary.
+              Enter your birth details on the left and our AI &mdash; trained on classical Vedic Jyotish principles &mdash; will generate your free chart summary.
             </p>
             <div className="grid grid-cols-3 gap-4 mt-8 w-full max-w-sm">
               {[
-                { icon: "\u2648", label: "Ascendant (Lagna)" },
+                { icon: "♈", label: "Ascendant (Lagna)" },
                 { icon: "🌙", label: "Moon Sign (Rashi)" },
-                { icon: "\u2600\ufe0f", label: "Mahadasha Period" },
+                { icon: "☀️", label: "Mahadasha Period" },
               ].map((item) => (
                 <div key={item.label} className="bg-ivory rounded-btn p-3 text-center">
                   <div className="text-xl mb-1">{item.icon}</div>
@@ -244,6 +336,23 @@ export default function KundliClient() {
 
         {reading && (
           <div className="space-y-4">
+            {(emailSent || sendingEmail) && (
+              <div className={`flex items-center gap-3 rounded-card p-4 border ${
+                emailSent ? "bg-teal/5 border-teal/20" : "bg-ivory border-ivory-dark"
+              }`}>
+                {sendingEmail ? (
+                  <span className="w-4 h-4 border-2 border-charcoal/20 border-t-charcoal rounded-full animate-spin flex-shrink-0" />
+                ) : (
+                  <CheckCircle2 size={18} className="text-teal flex-shrink-0" />
+                )}
+                <p className="font-label text-label-md text-charcoal-muted">
+                  {sendingEmail
+                    ? "Sending your report to " + form.email + "..."
+                    : "Report sent to " + form.email + " — check your inbox."}
+                </p>
+              </div>
+            )}
+
             <div className="bg-white rounded-card shadow-card p-8" ref={reportRef}>
               <div className="flex items-center gap-2 mb-6 pb-5 border-b border-ivory-dark">
                 <Sparkles size={18} className="text-gold" />
@@ -290,7 +399,7 @@ export default function KundliClient() {
                   "Remedy & mantra suggestions",
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 font-label text-label-sm text-ivory/90">
-                    <span className="text-gold">✓</span> {item}
+                    <span className="text-gold">&#10003;</span> {item}
                   </div>
                 ))}
               </div>

@@ -55,7 +55,7 @@ async function fetchProkeralaKundli(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const raw: any = await res.json();
     const d = raw?.data ?? raw;
-    const lines: string[] = ["=== BIRTH CHART (Prokerala, Lahiri Ayanamsa) — FOR INTERNAL USE ONLY ==="];
+    const lines: string[] = ["=== BIRTH CHART (Prokerala, Lahiri Ayanamsa) -- FOR INTERNAL USE ONLY ==="];
 
     if (d.ascendant)     lines.push(`Ascendant: ${d.ascendant.name ?? d.ascendant}`);
     if (d.moon_sign)     lines.push(`Moon Sign: ${d.moon_sign.name ?? d.moon_sign}`);
@@ -77,11 +77,54 @@ async function fetchProkeralaKundli(
   }
 }
 
+// Save lead to Sender subscriber list (fire-and-forget, non-fatal)
+async function saveLeadToSender(
+  email: string,
+  name: string,
+  birthDate: string,
+  birthLocation: string
+): Promise<void> {
+  try {
+    const groupId = process.env.SENDER_GROUP_ID;
+    const apiKey = process.env.SENDER_API_KEY;
+    if (!apiKey) return;
+
+    await fetch("https://api.sender.net/v2/subscribers", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        firstname: name?.split(" ")[0] || "",
+        lastname: name?.split(" ").slice(1).join(" ") || "",
+        groups: groupId ? [groupId] : [],
+        tags: ["Free Kundli Lead"],
+        fields: {
+          birth_date: birthDate,
+          birth_location: birthLocation,
+          submitted_at: new Date().toISOString(),
+        },
+      }),
+    });
+  } catch (err) {
+    console.error("[kundli] Lead save failed:", err);
+  }
+}
+
 export async function POST(req: NextRequest) {
-  const { name, birthDate, birthTime, birthLocation } = await req.json();
+  const { name, birthDate, birthTime, birthLocation, email, consent } = await req.json();
 
   if (!birthDate || !birthTime || !birthLocation) {
     return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return new Response(JSON.stringify({ error: "A valid email address is required." }), { status: 400 });
+  }
+  if (!consent) {
+    return new Response(JSON.stringify({ error: "Consent is required to generate your report." }), { status: 400 });
   }
   if (!process.env.GROQ_API_KEY) {
     return new Response(
@@ -89,6 +132,9 @@ export async function POST(req: NextRequest) {
       { status: 503 }
     );
   }
+
+  // Save lead before streaming (fire-and-forget)
+  saveLeadToSender(email, name || "", birthDate, birthLocation);
 
   const { lat, lng } = await geocode(birthLocation);
   const chartData    = await fetchProkeralaKundli(birthDate, birthTime, lat, lng, birthLocation);
@@ -169,7 +215,7 @@ export async function POST(req: NextRequest) {
     `- Your next 12 months mapped against your personal cycle\n` +
     `- Personalized remedies based on your specific chart\n` +
     `- Gemstone and mantra guidance\n\n` +
-    `Most people who read this recognize something true about themselves. The complete reading explains why it's true."\n\n` +
+    `Most people who read this recognize something true about themselves. The complete reading explains why it is true."\n\n` +
     `*Book with a verified Setu astrologer -- starting at $175.*`;
 
   const stream = await groq.chat.completions.create({
@@ -188,6 +234,19 @@ export async function POST(req: NextRequest) {
       for await (const chunk of stream) {
         const text = chunk.choices[0]?.delta?.content ?? "";
         if (text) controller.enqueue(encoder.encode(text));
+      }
+      controller.close();
+    },
+  });
+
+  return new Response(readable, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Transfer-Encoding": "chunked",
+    },
+  });
+}
+));
       }
       controller.close();
     },
