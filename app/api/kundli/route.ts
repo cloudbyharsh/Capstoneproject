@@ -246,16 +246,3 @@ export async function POST(req: NextRequest) {
     },
   });
 }
-));
-      }
-      controller.close();
-    },
-  });
-
-  return new Response(readable, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Transfer-Encoding": "chunked",
-    },
-  });
-}
