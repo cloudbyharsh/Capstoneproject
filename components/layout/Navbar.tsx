@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/soul-match", label: "Soul Match" },
   { href: "/panchang", label: "Panchang" },
   { href: "/providers", label: "Providers" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 export default function Navbar() {
