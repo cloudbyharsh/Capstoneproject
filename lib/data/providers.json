@@ -6,12 +6,24 @@
     "verified": true,
     "rating": 4.9,
     "reviewCount": 142,
-    "specialties": ["Puja Ceremonies", "Griha Pravesh", "Satyanarayan Katha"],
+    "specialties": [
+      "Puja Ceremonies",
+      "Griha Pravesh",
+      "Satyanarayan Katha"
+    ],
     "bio": "With over 20 years of experience performing sacred Vedic rituals, Pandit Ravi Sharma brings authentic tradition to every ceremony. Trained at the renowned Kashi Vishwanath Vedic School, he specializes in creating spiritually meaningful experiences for families across the diaspora.",
-    "serviceIds": ["s1", "s2", "s3"],
+    "serviceIds": [
+      "s1",
+      "s2",
+      "s3"
+    ],
     "location": "Toronto, ON",
     "yearsExperience": 20,
-    "languages": ["Hindi", "English", "Sanskrit"],
+    "languages": [
+      "Hindi",
+      "English",
+      "Sanskrit"
+    ],
     "reviews": [
       {
         "id": "r1",
@@ -19,7 +31,7 @@
         "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop",
         "rating": 5,
         "date": "2024-11-15",
-        "text": "Pandit Ravi performed our Griha Pravesh with such devotion and clarity. He explained every step, making it meaningful for our whole family, including those who had never witnessed such rituals."
+        "text": "Pandit Ravi performed our Griha Pravesh with such devotion and clarity. He explained every step, making it meaningful for our whole family."
       },
       {
         "id": "r2",
@@ -35,7 +47,7 @@
         "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop",
         "rating": 5,
         "date": "2024-09-20",
-        "text": "We've used Devly twice now and Pandit Ravi is exceptional. His energy is calming and sacred. Our kids actually stayed engaged the whole time."
+        "text": "We have used Setu twice now and Pandit Ravi is exceptional. His energy is calming and sacred. Our kids actually stayed engaged the whole time."
       }
     ]
   },
@@ -46,12 +58,23 @@
     "verified": true,
     "rating": 4.8,
     "reviewCount": 89,
-    "specialties": ["Vedic Astrology", "Kundali Matching", "Career Guidance"],
+    "specialties": [
+      "Vedic Astrology",
+      "Kundali Matching",
+      "Career Guidance"
+    ],
     "bio": "Acharya Deepak is a third-generation Jyotish practitioner with deep expertise in Parashari astrology. He offers profound insights into life's key transitions — marriage, career, health, and spiritual evolution — using your birth chart as a map.",
-    "serviceIds": ["s4", "s5"],
+    "serviceIds": [
+      "s4",
+      "s5"
+    ],
     "location": "Mississauga, ON",
     "yearsExperience": 15,
-    "languages": ["Hindi", "English", "Gujarati"],
+    "languages": [
+      "Hindi",
+      "English",
+      "Gujarati"
+    ],
     "reviews": [
       {
         "id": "r4",
@@ -78,12 +101,23 @@
     "verified": true,
     "rating": 4.7,
     "reviewCount": 56,
-    "specialties": ["Vastu Shastra", "Home Harmonization", "Office Design"],
+    "specialties": [
+      "Vastu Shastra",
+      "Home Harmonization",
+      "Office Design"
+    ],
     "bio": "Meena Ji is a certified Vastu consultant trained in classical Vastu Shastra principles. She helps families and businesses align their spaces with natural energies, creating environments that support prosperity, harmony, and well-being.",
-    "serviceIds": ["s6", "s7"],
+    "serviceIds": [
+      "s6",
+      "s7"
+    ],
     "location": "Brampton, ON",
     "yearsExperience": 12,
-    "languages": ["Hindi", "English", "Marathi"],
+    "languages": [
+      "Hindi",
+      "English",
+      "Marathi"
+    ],
     "reviews": [
       {
         "id": "r6",
@@ -102,12 +136,24 @@
     "verified": true,
     "rating": 4.9,
     "reviewCount": 203,
-    "specialties": ["Guided Meditation", "Havan Ceremonies", "Spiritual Counselling"],
+    "specialties": [
+      "Guided Meditation",
+      "Havan Ceremonies",
+      "Spiritual Counselling"
+    ],
     "bio": "Swami Prakash Ananda has dedicated 25 years to the practice and teaching of Vedic meditation and fire ceremonies. His sessions blend ancient wisdom with modern accessibility, offering profound inner experiences for seekers at all levels.",
-    "serviceIds": ["s8", "s9", "s10"],
+    "serviceIds": [
+      "s8",
+      "s9",
+      "s10"
+    ],
     "location": "Oakville, ON",
     "yearsExperience": 25,
-    "languages": ["Hindi", "English", "Sanskrit"],
+    "languages": [
+      "Hindi",
+      "English",
+      "Sanskrit"
+    ],
     "reviews": [
       {
         "id": "r7",
@@ -123,7 +169,7 @@
         "avatar": "https://images.unsplash.com/photo-1463453091185-61582044d556?w=80&h=80&fit=crop",
         "rating": 5,
         "date": "2024-11-05",
-        "text": "We booked the Havan for Diwali and it was the highlight of our celebration. Every family member was moved. This is what Devly is for."
+        "text": "We booked the Havan for Diwali and it was the highlight of our celebration. Every family member was moved. This is what Setu is for."
       }
     ]
   },
@@ -134,12 +180,25 @@
     "verified": true,
     "rating": 4.8,
     "reviewCount": 63,
-    "specialties": ["Navgraha Puja", "Grah Shanti", "Satyanarayan Katha", "Vastu Puja"],
+    "specialties": [
+      "Navgraha Puja",
+      "Grah Shanti",
+      "Satyanarayan Katha",
+      "Vastu Puja"
+    ],
     "bio": "Pandit Suresh Tripathi is a Vedic priest from Varanasi with 18 years of experience specializing in planetary remedy rituals. He has helped hundreds of families in the GTA resolve career, health, and relationship obstacles through targeted Navgraha and Grah Shanti ceremonies rooted in classical Atharva Veda traditions.",
-    "serviceIds": ["s11", "s12"],
+    "serviceIds": [
+      "s11",
+      "s12"
+    ],
     "location": "Brampton, ON",
     "yearsExperience": 18,
-    "languages": ["Hindi", "English", "Bhojpuri", "Sanskrit"],
+    "languages": [
+      "Hindi",
+      "English",
+      "Bhojpuri",
+      "Sanskrit"
+    ],
     "reviews": [
       {
         "id": "r10",
@@ -147,4 +206,92 @@
         "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
         "rating": 5,
         "date": "2025-01-10",
-        "text": "Pandit Suresh performed a Navgraha Shanti for our family before a major business launch. The cerem
+        "text": "Pandit Suresh performed a Navgraha Shanti for our family before a major business launch. The ceremony was deeply authentic and the energy shifted noticeably. Highly recommended."
+      },
+      {
+        "id": "r11",
+        "author": "Pooja Agarwal",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-12-18",
+        "text": "We booked the Grah Shanti based on our astrologer's recommendation and Pandit ji was incredibly thorough. He explained each step and made our whole family feel included."
+      }
+    ]
+  },
+  {
+    "id": "p7",
+    "name": "Acharya Priya Nambiar",
+    "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop",
+    "verified": true,
+    "rating": 4.9,
+    "reviewCount": 81,
+    "specialties": [
+      "Career Astrology",
+      "Marriage Timing",
+      "Relationship Compatibility",
+      "Life Path Analysis"
+    ],
+    "bio": "Acharya Priya Nambiar is a Vedic astrologer with 14 years of experience focusing on life decisions — career transitions, marriage timing, and relationship compatibility. She combines classical Parashari Jyotish with modern psychological insight, offering consultations that are practical, compassionate, and grounded in rigorous chart analysis.",
+    "serviceIds": [
+      "s13",
+      "s14"
+    ],
+    "location": "Scarborough, ON",
+    "yearsExperience": 14,
+    "languages": [
+      "Malayalam",
+      "Hindi",
+      "English"
+    ],
+    "reviews": [
+      {
+        "id": "r12",
+        "author": "Rohan Menon",
+        "avatar": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2025-01-22",
+        "text": "Acharya Priya's career consultation was the most useful thing I did all year. She identified the exact timing window for my job change and it played out exactly as she predicted."
+      },
+      {
+        "id": "r13",
+        "author": "Ananya Krishnan",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2025-01-05",
+        "text": "Her marriage consultation gave me and my partner a completely new perspective on our compatibility. Non-judgmental, precise, and deeply insightful. Worth every penny."
+      }
+    ]
+  },
+  {
+    "id": "p5",
+    "name": "Dr. Sujata Iyengar",
+    "photo": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop",
+    "verified": true,
+    "rating": 4.8,
+    "reviewCount": 74,
+    "specialties": [
+      "Ayurvedic Consultation",
+      "Wellness Planning",
+      "Herbal Remedies"
+    ],
+    "bio": "Dr. Sujata is an Ayurvedic practitioner with dual degrees in Ayurvedic Medicine (BAMS) and integrative nutrition. She offers personalized wellness consultations rooted in the ancient science of life.",
+    "serviceIds": [],
+    "location": "Markham, ON",
+    "yearsExperience": 10,
+    "languages": [
+      "Tamil",
+      "Hindi",
+      "English"
+    ],
+    "reviews": [
+      {
+        "id": "r9",
+        "author": "Divya Krishnan",
+        "avatar": "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?w=80&h=80&fit=crop",
+        "rating": 5,
+        "date": "2024-10-30",
+        "text": "Dr. Sujata's Ayurvedic consultation completely changed how I think about my health. Finally someone who treats the whole person, not just symptoms."
+      }
+    ]
+  }
+]

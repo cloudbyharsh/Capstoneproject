@@ -10,23 +10,42 @@
     "reviewCount": 67,
     "providerId": "p1",
     "image": "/service-puja.png",
-    "tags": ["Housewarming", "Family", "Vedic"],
-    "includes": ["Ganesh Puja", "Vastu Shanti", "Havan", "Prasad preparation", "All puja samagri"],
+    "tags": [
+      "Housewarming",
+      "Family",
+      "Vedic"
+    ],
+    "includes": [
+      "Ganesh Puja",
+      "Vastu Shanti",
+      "Havan",
+      "Prasad preparation",
+      "All puja samagri"
+    ],
     "featured": true
   },
   {
     "id": "s2",
     "title": "Satyanarayan Katha",
     "category": "Puja",
-    "description": "A devotional recitation of the story of Lord Vishnu performed for prosperity, well-being, and fulfillment of wishes. Suitable for all auspicious occasions — new business, anniversaries, or Ekadashi.",
+    "description": "A devotional recitation of the story of Lord Vishnu performed for prosperity, well-being, and fulfillment of wishes. Suitable for all auspicious occasions.",
     "price": 250,
     "duration": "2 hours",
     "rating": 4.8,
     "reviewCount": 45,
     "providerId": "p1",
     "image": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&h=500&fit=crop",
-    "tags": ["Vishnu", "Prosperity", "Occasion"],
-    "includes": ["Full Katha recitation", "Aarti", "Panchamrit abhishek", "Prasad distribution"],
+    "tags": [
+      "Vishnu",
+      "Prosperity",
+      "Occasion"
+    ],
+    "includes": [
+      "Full Katha recitation",
+      "Aarti",
+      "Panchamrit abhishek",
+      "Prasad distribution"
+    ],
     "featured": true
   },
   {
@@ -40,8 +59,17 @@
     "reviewCount": 30,
     "providerId": "p1",
     "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=500&fit=crop",
-    "tags": ["Baby", "Naming", "Family"],
-    "includes": ["Horoscope preparation", "Naming ritual", "Blessing ceremony", "Baby aarti"],
+    "tags": [
+      "Baby",
+      "Naming",
+      "Family"
+    ],
+    "includes": [
+      "Horoscope preparation",
+      "Naming ritual",
+      "Blessing ceremony",
+      "Baby aarti"
+    ],
     "featured": false
   },
   {
@@ -55,8 +83,17 @@
     "reviewCount": 88,
     "providerId": "p2",
     "image": "/service-kundli.png",
-    "tags": ["Kundali", "Life Path", "Timing"],
-    "includes": ["Full chart analysis", "Dasha timeline", "Remedies & recommendations", "Written report"],
+    "tags": [
+      "Kundali",
+      "Life Path",
+      "Timing"
+    ],
+    "includes": [
+      "Full chart analysis",
+      "Dasha timeline",
+      "Remedies & recommendations",
+      "Written report"
+    ],
     "featured": true
   },
   {
@@ -70,8 +107,17 @@
     "reviewCount": 41,
     "providerId": "p2",
     "image": "/service-kundli.png",
-    "tags": ["Marriage", "Compatibility", "Muhurta"],
-    "includes": ["Ashtakoot analysis", "Mangal dosha check", "Muhurta selection", "Report PDF"],
+    "tags": [
+      "Marriage",
+      "Compatibility",
+      "Muhurta"
+    ],
+    "includes": [
+      "Ashtakoot analysis",
+      "Mangal dosha check",
+      "Muhurta selection",
+      "Report PDF"
+    ],
     "featured": false
   },
   {
@@ -85,8 +131,17 @@
     "reviewCount": 35,
     "providerId": "p3",
     "image": "/service-vastu.png",
-    "tags": ["Home", "Energy", "Remedies"],
-    "includes": ["Full home walkthrough", "Energy mapping", "Remedy plan", "Follow-up call"],
+    "tags": [
+      "Home",
+      "Energy",
+      "Remedies"
+    ],
+    "includes": [
+      "Full home walkthrough",
+      "Energy mapping",
+      "Remedy plan",
+      "Follow-up call"
+    ],
     "featured": true
   },
   {
@@ -100,8 +155,17 @@
     "reviewCount": 21,
     "providerId": "p3",
     "image": "/service-vastu.png",
-    "tags": ["Office", "Business", "Prosperity"],
-    "includes": ["Office floor plan analysis", "Directional corrections", "Prosperity remedies", "Written report"],
+    "tags": [
+      "Office",
+      "Business",
+      "Prosperity"
+    ],
+    "includes": [
+      "Office floor plan analysis",
+      "Directional corrections",
+      "Prosperity remedies",
+      "Written report"
+    ],
     "featured": false
   },
   {
@@ -115,8 +179,17 @@
     "reviewCount": 112,
     "providerId": "p4",
     "image": "/service-meditation.png",
-    "tags": ["Meditation", "Mantra", "Wellness"],
-    "includes": ["Pranayama warm-up", "Guided mantra meditation", "Silent sitting", "Post-session sharing"],
+    "tags": [
+      "Meditation",
+      "Mantra",
+      "Wellness"
+    ],
+    "includes": [
+      "Pranayama warm-up",
+      "Guided mantra meditation",
+      "Silent sitting",
+      "Post-session sharing"
+    ],
     "featured": true
   },
   {
@@ -130,8 +203,19 @@
     "reviewCount": 58,
     "providerId": "p4",
     "image": "/service-diwali.png",
-    "tags": ["Diwali", "Lakshmi", "Havan", "Festival"],
-    "includes": ["Lakshmi-Ganesh puja", "Full havan ceremony", "Aarti", "Prasad", "All samagri provided"],
+    "tags": [
+      "Diwali",
+      "Lakshmi",
+      "Havan",
+      "Festival"
+    ],
+    "includes": [
+      "Lakshmi-Ganesh puja",
+      "Full havan ceremony",
+      "Aarti",
+      "Prasad",
+      "All samagri provided"
+    ],
     "featured": true
   },
   {
@@ -145,8 +229,17 @@
     "reviewCount": 33,
     "providerId": "p4",
     "image": "/service-meditation.png",
-    "tags": ["Philosophy", "Dharma", "Group"],
-    "includes": ["Group discussion", "Q&A with Swamiji", "Guided reflection", "Take-home practices"],
+    "tags": [
+      "Philosophy",
+      "Dharma",
+      "Group"
+    ],
+    "includes": [
+      "Group discussion",
+      "Q&A with Swamiji",
+      "Guided reflection",
+      "Take-home practices"
+    ],
     "featured": false
   },
   {
@@ -160,5 +253,90 @@
     "reviewCount": 29,
     "providerId": "p6",
     "image": "/service-panchang.png",
-    "tags": ["Planets", "Remedy", "Dosha"],
-    "includes": ["Nine p
+    "tags": [
+      "Planets",
+      "Remedy",
+      "Dosha"
+    ],
+    "includes": [
+      "Nine planetary mantras",
+      "Individual graha offerings",
+      "Havan",
+      "Prasad",
+      "Remedy recommendations"
+    ],
+    "featured": false
+  },
+  {
+    "id": "s12",
+    "title": "Grah Shanti Puja",
+    "category": "Puja",
+    "description": "A targeted ritual to appease a specific malefic planet causing obstacles in your life path. Customized based on your Kundli analysis and current dasha period.",
+    "price": 275,
+    "duration": "2 hours",
+    "rating": 4.7,
+    "reviewCount": 18,
+    "providerId": "p6",
+    "image": "/service-puja.png",
+    "tags": [
+      "Remedy",
+      "Planets",
+      "Personalized"
+    ],
+    "includes": [
+      "Kundli review",
+      "Targeted mantra recitation",
+      "Havan",
+      "Gemstone guidance"
+    ],
+    "featured": false
+  },
+  {
+    "id": "s13",
+    "title": "Career & Finance Guidance",
+    "category": "Astrology",
+    "description": "A focused 45-minute Vedic astrology consultation on career timing, business decisions, and financial opportunities. Covers the 10th and 2nd house analysis with dasha overlay.",
+    "price": 150,
+    "duration": "45 minutes",
+    "rating": 4.8,
+    "reviewCount": 37,
+    "providerId": "p7",
+    "image": "/service-kundli.png",
+    "tags": [
+      "Career",
+      "Finance",
+      "Timing"
+    ],
+    "includes": [
+      "10th house analysis",
+      "Current dasha impact",
+      "Auspicious timing windows",
+      "Action recommendations"
+    ],
+    "featured": false
+  },
+  {
+    "id": "s14",
+    "title": "Marriage & Relationship Consultation",
+    "category": "Astrology",
+    "description": "An in-depth astrological consultation addressing relationship patterns, compatibility insights, and the timing of marriage for singles or couples navigating relationship decisions.",
+    "price": 185,
+    "duration": "60 minutes",
+    "rating": 4.9,
+    "reviewCount": 44,
+    "providerId": "p7",
+    "image": "/service-kundli.png",
+    "tags": [
+      "Marriage",
+      "Relationships",
+      "Venus"
+    ],
+    "includes": [
+      "7th house analysis",
+      "Venus & Jupiter placement",
+      "Timing windows",
+      "Compatibility summary"
+    ],
+    "featured": true
+  }
+]
