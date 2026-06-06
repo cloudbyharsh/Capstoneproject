@@ -9,7 +9,7 @@
     "rating": 4.9,
     "reviewCount": 67,
     "providerId": "p1",
-    "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=500&fit=crop",
+    "image": "/service-puja.png",
     "tags": ["Housewarming", "Family", "Vedic"],
     "includes": ["Ganesh Puja", "Vastu Shanti", "Havan", "Prasad preparation", "All puja samagri"],
     "featured": true
@@ -54,7 +54,7 @@
     "rating": 4.9,
     "reviewCount": 88,
     "providerId": "p2",
-    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop",
+    "image": "/service-kundli.png",
     "tags": ["Kundali", "Life Path", "Timing"],
     "includes": ["Full chart analysis", "Dasha timeline", "Remedies & recommendations", "Written report"],
     "featured": true
@@ -69,7 +69,7 @@
     "rating": 4.8,
     "reviewCount": 41,
     "providerId": "p2",
-    "image": "https://images.unsplash.com/photo-1545396074-26f56b1f3476?w=800&h=500&fit=crop",
+    "image": "/service-kundli.png",
     "tags": ["Marriage", "Compatibility", "Muhurta"],
     "includes": ["Ashtakoot analysis", "Mangal dosha check", "Muhurta selection", "Report PDF"],
     "featured": false
@@ -84,7 +84,7 @@
     "rating": 4.7,
     "reviewCount": 35,
     "providerId": "p3",
-    "image": "https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&h=500&fit=crop",
+    "image": "/service-vastu.png",
     "tags": ["Home", "Energy", "Remedies"],
     "includes": ["Full home walkthrough", "Energy mapping", "Remedy plan", "Follow-up call"],
     "featured": true
@@ -99,7 +99,7 @@
     "rating": 4.7,
     "reviewCount": 21,
     "providerId": "p3",
-    "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop",
+    "image": "/service-vastu.png",
     "tags": ["Office", "Business", "Prosperity"],
     "includes": ["Office floor plan analysis", "Directional corrections", "Prosperity remedies", "Written report"],
     "featured": false
@@ -114,7 +114,7 @@
     "rating": 4.9,
     "reviewCount": 112,
     "providerId": "p4",
-    "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&h=500&fit=crop",
+    "image": "/service-meditation.png",
     "tags": ["Meditation", "Mantra", "Wellness"],
     "includes": ["Pranayama warm-up", "Guided mantra meditation", "Silent sitting", "Post-session sharing"],
     "featured": true
@@ -129,7 +129,7 @@
     "rating": 4.9,
     "reviewCount": 58,
     "providerId": "p4",
-    "image": "https://images.unsplash.com/photo-1514454206-a6c1db1aaef8?w=800&h=500&fit=crop",
+    "image": "/service-diwali.png",
     "tags": ["Diwali", "Lakshmi", "Havan", "Festival"],
     "includes": ["Lakshmi-Ganesh puja", "Full havan ceremony", "Aarti", "Prasad", "All samagri provided"],
     "featured": true
@@ -144,9 +144,21 @@
     "rating": 4.8,
     "reviewCount": 33,
     "providerId": "p4",
-    "image": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=500&fit=crop",
+    "image": "/service-meditation.png",
     "tags": ["Philosophy", "Dharma", "Group"],
     "includes": ["Group discussion", "Q&A with Swamiji", "Guided reflection", "Take-home practices"],
     "featured": false
-  }
-]
+  },
+  {
+    "id": "s11",
+    "title": "Navgraha Shanti Puja",
+    "category": "Puja",
+    "description": "A powerful ceremony to pacify the nine planetary deities and remove doshas affecting health, career, and relationships. Recommended before major life transitions.",
+    "price": 375,
+    "duration": "3 hours",
+    "rating": 4.8,
+    "reviewCount": 29,
+    "providerId": "p6",
+    "image": "/service-panchang.png",
+    "tags": ["Planets", "Remedy", "Dosha"],
+    "includes": ["Nine p

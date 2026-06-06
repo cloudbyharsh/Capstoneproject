@@ -42,7 +42,6 @@ export default function ContactPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-
     if (!isValidEmail(form.email)) { setError("Please enter a valid email address."); return; }
     if (!isValidPhone(form.phone)) { setError("Please enter a valid phone number."); return; }
     if (form.message.trim().length < 10) { setError("Please write a message of at least 10 characters."); return; }
@@ -140,14 +139,15 @@ export default function ContactPage() {
                   Thank You for Connecting
                 </h2>
                 <p className="font-body text-body-md text-charcoal-muted max-w-sm">
-                  We&apos;ve received your message and will get back to you within 24 hours. A confirmation has been sent to <span className="text-maroon font-semibold">{form.email}</span>.
+                  We&apos;ve received your message and will get back to you within 24 hours. A confirmation has been sent to{" "}
+                  <span className="text-maroon font-semibold">{form.email}</span>.
                 </p>
               </div>
             ) : (
               <div className="bg-white rounded-card shadow-card p-8 border border-ivory-dark/40">
                 <h2 className="font-headline font-semibold text-heading-md text-charcoal mb-6">Send a Message</h2>
-
                 <form onSubmit={handleSubmit} className="space-y-4">
+
                   {/* Name */}
                   <div>
                     <label className="block font-label text-label-md text-charcoal-muted mb-1.5">
@@ -166,7 +166,7 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Email + Phone row */}
+                  {/* Email + Phone */}
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block font-label text-label-md text-charcoal-muted mb-1.5">

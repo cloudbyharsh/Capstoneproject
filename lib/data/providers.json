@@ -128,27 +128,23 @@
     ]
   },
   {
-    "id": "p5",
-    "name": "Dr. Sujata Iyengar",
-    "photo": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop",
+    "id": "p6",
+    "name": "Pandit Suresh Tripathi",
+    "photo": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&h=400&fit=crop",
     "verified": true,
     "rating": 4.8,
-    "reviewCount": 74,
-    "specialties": ["Ayurvedic Consultation", "Wellness Planning", "Herbal Remedies"],
-    "bio": "Dr. Sujata is an Ayurvedic practitioner with dual degrees in Ayurvedic Medicine (BAMS) and integrative nutrition. She offers personalized wellness consultations rooted in the ancient science of life — helping clients align diet, lifestyle, and habits with their natural constitution.",
-    "serviceIds": [],
-    "location": "Markham, ON",
-    "yearsExperience": 10,
-    "languages": ["Tamil", "Hindi", "English"],
+    "reviewCount": 63,
+    "specialties": ["Navgraha Puja", "Grah Shanti", "Satyanarayan Katha", "Vastu Puja"],
+    "bio": "Pandit Suresh Tripathi is a Vedic priest from Varanasi with 18 years of experience specializing in planetary remedy rituals. He has helped hundreds of families in the GTA resolve career, health, and relationship obstacles through targeted Navgraha and Grah Shanti ceremonies rooted in classical Atharva Veda traditions.",
+    "serviceIds": ["s11", "s12"],
+    "location": "Brampton, ON",
+    "yearsExperience": 18,
+    "languages": ["Hindi", "English", "Bhojpuri", "Sanskrit"],
     "reviews": [
       {
-        "id": "r9",
-        "author": "Divya Krishnan",
-        "avatar": "https://images.unsplash.com/photo-1614644147798-f8c0fc9da7f6?w=80&h=80&fit=crop",
+        "id": "r10",
+        "author": "Manish Tiwari",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop",
         "rating": 5,
-        "date": "2024-10-30",
-        "text": "Dr. Sujata's Ayurvedic consultation completely changed how I think about my health. Finally someone who treats the whole person, not just symptoms."
-      }
-    ]
-  }
-]
+        "date": "2025-01-10",
+        "text": "Pandit Suresh performed a Navgraha Shanti for our family before a major business launch. The cerem
