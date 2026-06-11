@@ -29,7 +29,6 @@ export default function Home() {
         <FeaturedServices />
         <HowItWorks />
         <Testimonials />
-
         <section style={{ background: "#000", borderTop: "0.5px solid #141414", padding: "80px 0" }}>
           <div className="layout-container px-4 md:px-12 mx-auto" style={{ maxWidth: "560px" }}>
             <div style={{ textAlign: "center" }}>
@@ -42,15 +41,10 @@ export default function Home() {
               <p style={{ fontFamily: "Times New Roman, serif", fontSize: "14px", color: "#575657", fontStyle: "italic", marginBottom: "32px", lineHeight: "1.6" }}>
                 Auspicious dates, ceremony guides, and Vedic insights delivered to your inbox.
               </p>
-              <div
-                style={{ textAlign: "left" }}
-                className="sender-form-field"
-                data-sender-form-id="b4xjAk"
-              />
+              <div style={{ textAlign: "left" }} className="sender-form-field" data-sender-form-id="b4xjAk" />
             </div>
           </div>
         </section>
-
         <PanchangWidget />
       </div>
     </>
