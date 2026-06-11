@@ -57,10 +57,10 @@ export default function RootLayout({
                                     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:wght@300;400;500&family=Noto+Serif+Devanagari:wght@400;500&display=swap"
                                     rel="stylesheet"
                                   />
-                </head>head>
+                </head>
                 <body className="antialiased bg-ivory text-charcoal">
                         <Navbar />
-                        <main>{children}</main>main>
+                        <main>{children}</main>
                         <Footer />
                   {/* Sender.net Email Capture */}
                         <Script
@@ -75,8 +75,8 @@ export default function RootLayout({
                   {/* Heap Analytics */}
                         <Script id="heap-analytics" strategy="afterInteractive">
                           {`window.heapReadyCb=window.heapReadyCb||[],window.heap=window.heap||[],heap.load=function(e,t){window.heap.envId=e,window.heap.clientConfig=t=t||{},window.heap.clientConfig.shouldFetchServerConfig=!1;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://cdn.us.heap-api.com/config/"+e+"/heap_config.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(a,r);var n=["init","startTracking","stopTracking","track","resetIdentity","identify","getSessionId","getUserId","getIdentity","addUserProperties","addEventProperties","removeEventProperty","clearEventProperties","addAccountProperties","addAdapter","addTransformer","addTransformerFn","onReady","addPageviewProperties","removePageviewProperty","clearPageviewProperties","trackPageview"],i=function(e){return function(){var t=Array.prototype.slice.call(arguments,0);window.heapReadyCb.push({name:e,fn:function(){heap[e]&&heap[e].apply(heap,t)}})}};for(var p=0;p<n.length;p++)heap[n[p]]=i(n[p])};heap.load("2941083674");`}
-                        </Script>Script>
-                </body>body>
-          </html>html>
+                        </Script>
+                </body>
+          </html>
         );
 }</html>
