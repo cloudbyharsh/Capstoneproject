@@ -4,6 +4,10 @@
 
 :root {
   --background: #FAF7F0;
+    --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+    --font-playfair:   'Playfair Display', Georgia, serif;
+    --font-dm-sans:    'DM Sans', Arial, sans-serif;
+    --font-devanagari: 'Noto Serif Devanagari', serif;
   --foreground: #2C1608;
   --gold:        #C4922A;
   --maroon:      #610000;
