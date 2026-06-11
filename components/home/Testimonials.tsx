@@ -1,63 +1,31 @@
 const testimonials = [
-  {
-    quote: "We had Pandit Ravi perform our son's Namkaran ceremony. Every detail was perfect — from the mantras to the explanation for our non-Indian guests. Setu made it effortless to book.",
-    author: "Anita Sharma",
-    role: "Mother, Griha Pravesh & Namkaran",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop",
-    rating: 5,
-  },
-  {
-    quote: "I've been living in Canada for 15 years and always struggled to find authentic spiritual practitioners. Setu changed that completely. The astrology session with Acharya Deepak was life-changing.",
-    author: "Rahul Bhatia",
-    role: "Vedic Astrology Consultation",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop",
-    rating: 5,
-  },
-  {
-    quote: "Swami Prakash's Diwali havan brought our whole family together in a way we hadn't experienced since moving here. This is exactly what the diaspora needs.",
-    author: "Kavitha Menon",
-    role: "Diwali Havan Ceremony",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop",
-    rating: 5,
-  },
-  {
-    quote: "The Vastu consultation for our new office was incredibly practical. Meena Ji explained everything in terms that made sense and the changes we made really shifted the energy of the space.",
-    author: "Vijay Nair",
-    role: "Office Vastu Assessment",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop",
-    rating: 5,
-  },
+  { quote: "Pandit Ravi performed our son's Namkaran with such devotion and clarity. Every detail was perfect. Setu made it effortless.", author: "Anita Sharma", role: "Namkaran Ceremony" },
+  { quote: "I've been in Canada 15 years and always struggled to find authentic practitioners. The astrology session with Acharya Deepak was life-changing.", author: "Rahul Bhatia", role: "Vedic Astrology Consultation" },
+  { quote: "Swami Prakash's Diwali havan brought our whole family together in a way we hadn't felt since moving here. This is exactly what the diaspora needs.", author: "Kavitha Menon", role: "Diwali Havan Ceremony" },
+  { quote: "The Vastu consultation was incredibly practical. The changes we made really shifted the energy of the space.", author: "Vijay Nair", role: "Office Vastu Assessment" },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="section-pad bg-ivory">
+    <section style={{ background:"#000", borderTop:"0.5px solid #141414", padding:"80px 0" }}>
       <div className="layout-container px-4 md:px-12 mx-auto max-w-layout">
-        <div className="text-center mb-12">
-          <p className="font-label text-label-sm text-saffron uppercase tracking-widest mb-2">Community voices</p>
-          <h2 className="font-headline font-bold text-heading-lg text-charcoal">Stories from our Families</h2>
-        </div>
+        <p style={{ fontFamily:"Times New Roman, serif", fontSize:"9px", letterSpacing:"4px", color:"#333", textAlign:"center", marginBottom:"60px" }}>
+          WHAT FAMILIES SAY
+        </p>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1px", background:"#141414" }}
+          className="!grid-cols-1 md:!grid-cols-2"
+        >
           {testimonials.map((t, i) => (
-            <div key={i} className="bg-white rounded-card p-8 shadow-card">
-              <div className="flex gap-0.5 mb-5">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} className="text-gold">★</span>
-                ))}
-              </div>
-              <blockquote className="font-body text-body-md text-charcoal-muted leading-relaxed mb-6 italic">
+            <div key={i} style={{ background:"#000", padding:"40px 32px" }}>
+              <blockquote style={{ fontFamily:"Times New Roman, serif", fontSize:"14px", color:"#888", lineHeight:"1.8", fontStyle:"italic", marginBottom:"24px" }}>
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
-              <div className="flex items-center gap-3 pt-4 border-t border-ivory-dark">
-                <img
-                  src={t.avatar}
-                  alt={t.author}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
+              <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
+                <div style={{ width:"20px", height:"0.5px", background:"#C4922A", opacity:0.5 }} />
                 <div>
-                  <div className="font-headline font-semibold text-label-md text-charcoal">{t.author}</div>
-                  <div className="font-label text-label-sm text-charcoal-subtle">{t.role}</div>
+                  <p style={{ fontFamily:"Times New Roman, serif", fontSize:"11px", color:"#e0e0e0", letterSpacing:"1px" }}>{t.author}</p>
+                  <p style={{ fontFamily:"Times New Roman, serif", fontSize:"10px", color:"#333", marginTop:"2px" }}>{t.role}</p>
                 </div>
               </div>
             </div>
