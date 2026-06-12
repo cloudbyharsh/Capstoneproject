@@ -7,14 +7,29 @@ import Button from "@/components/ui/Button";
 export default function ContactPage() {
 
   useEffect(() => {
-    // Next.js SPA navigation means the global Sender script has already
-    // finished its initial DOM scan before this div exists. Re-calling
-    // sender() forces it to re-scan and render the embedded form.
+    // Next.js SPA navigation: the Sender script has already run its initial
+    // DOM scan before this div exists. We must explicitly call senderForms.render()
+    // once the div is mounted. Per Sender API docs, use the onSenderFormsLoaded
+    // event if the SDK isn't ready yet, otherwise render immediately.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const w = window as any;
-    if (typeof w.sender === "function") {
-      w.sender("1a295a76183580");
+    const FORM_ID = "b4xjAk";
+
+    function renderForm() {
+      w.senderForms?.render(FORM_ID);
     }
+
+    if (w.senderFormsLoaded) {
+      renderForm();
+    } else {
+      window.addEventListener("onSenderFormsLoaded", renderForm);
+    }
+
+    return () => {
+      // Clean up to avoid memory leaks on navigation away
+      window.removeEventListener("onSenderFormsLoaded", renderForm);
+      w.senderForms?.destroy(FORM_ID);
+    };
   }, []);
 
   return (
