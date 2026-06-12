@@ -1,3 +1,4 @@
+'use client';
 import KundliClient from "./KundliClient";
 
 export default function KundliPage() {
