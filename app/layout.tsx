@@ -62,14 +62,9 @@ export default function RootLayout({
                         <Navbar />
                         <main>{children}</main>
                         <Footer />
-                  {/* Sender.net Email Capture */}
-                        <Script
-                                    id="sender-universal"
-                                    strategy="afterInteractive"
-                                    src="https://cdn.sender.net/accounts_resources/universal.js"
-                                  />
-                        <Script id="sender-init" strategy="afterInteractive">
-                          {`window.addEventListener("load", function () { if (typeof window.sender === "function") { window.sender("1a295a76183580"); } });`}
+                  {/* Sender.net Email Capture — IIFE loads script + inits account in one shot */}
+                        <Script id="sender-universal" strategy="afterInteractive">
+                          {`(function(s,e,n,d,er){s['Sender']=er;s[er]=s[er]||function(){(s[er].q=s[er].q||[]).push(arguments)},s[er].l=1*new Date();var a=e.createElement(n),m=e.getElementsByTagName(n)[0];a.async=1;a.src=d;m.parentNode.insertBefore(a,m)})(window,document,'script','https://cdn.sender.net/accounts_resources/universal.js','sender');sender('1a295a76183580');`}
                         </Script>
                   {/* Heap Analytics */}
                         <Script id="heap-analytics" strategy="afterInteractive">

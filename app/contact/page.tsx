@@ -7,28 +7,37 @@ import Button from "@/components/ui/Button";
 export default function ContactPage() {
 
   useEffect(() => {
-    // Next.js SPA navigation: the Sender script has already run its initial
-    // DOM scan before this div exists. We must explicitly call senderForms.render()
-    // once the div is mounted. Per Sender API docs, use the onSenderFormsLoaded
-    // event if the SDK isn't ready yet, otherwise render immediately.
+    // Next.js SPA: Sender's universal.js runs once on initial page load and
+    // won't re-scan the DOM automatically on client-side navigation.
+    // Fix: call senderForms.render() for the explicit API, AND call sender()
+    // directly as a fallback (triggers a re-scan for the div now in the DOM).
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const w = window as any;
     const FORM_ID = "b4xjAk";
+    const ACCOUNT_ID = "1a295a76183580";
 
     function renderForm() {
-      w.senderForms?.render(FORM_ID);
+      if (w.senderForms?.render) {
+        w.senderForms.render(FORM_ID);
+      }
     }
 
     if (w.senderFormsLoaded) {
+      // Sender SDK already ready — render immediately
       renderForm();
     } else {
+      // Listen for SDK ready event
       window.addEventListener("onSenderFormsLoaded", renderForm);
+      // Also call sender() directly — re-triggers a DOM scan and catches cases
+      // where senderFormsLoaded is never set (e.g. universal.js already loaded)
+      if (typeof w.sender === "function") {
+        w.sender(ACCOUNT_ID);
+      }
     }
 
     return () => {
-      // Clean up to avoid memory leaks on navigation away
       window.removeEventListener("onSenderFormsLoaded", renderForm);
-      w.senderForms?.destroy(FORM_ID);
+      w.senderForms?.destroy?.(FORM_ID);
     };
   }, []);
 

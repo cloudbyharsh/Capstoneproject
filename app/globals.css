@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Sender.net embedded form ─────────────────────────────────── */
+.sender-form-field {
+  width: 100%;
+  min-height: 650px;
+}
+.sender-form-field iframe {
+  width: 100% !important;
+  min-height: 650px !important;
+  border: 0 !important;
+  display: block;
+}
+
 :root {
   --background: #FAF7F0;
     --font-cormorant: 'Cormorant Garamond', Georgia, serif;
