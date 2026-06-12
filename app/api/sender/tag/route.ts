@@ -10,16 +10,15 @@ import { NextRequest, NextResponse } from "next/server";
  *
  * Body: { email: string; name?: string; groups: GroupKey[] }
  *
- * GroupKey values (Vercel env vars → Sender group ID, e.g. "eZVD4w"):
- *   "kundli_lead"       → SENDER_GROUP_KUNDLI_LEAD
- *   "report_sent"       → SENDER_GROUP_REPORT_SENT
- *   "preview_viewed"    → SENDER_GROUP_PREVIEW_VIEWED
- *   "unlock_clicked"    → SENDER_GROUP_UNLOCK_CLICKED
- *   "consult_interest"  → SENDER_GROUP_CONSULT_INTEREST
+ * GroupKey values (Vercel env vars -> Sender group ID, e.g. "eZVD4w"):
+ *   "kundli_lead"       -> SENDER_GROUP_KUNDLI_LEAD
+ *   "report_sent"       -> SENDER_GROUP_REPORT_SENT
+ *   "preview_viewed"    -> SENDER_GROUP_PREVIEW_VIEWED
+ *   "unlock_clicked"    -> SENDER_GROUP_UNLOCK_CLICKED
+ *   "consult_interest"  -> SENDER_GROUP_CONSULT_INTEREST
  *
  * NOTE: Group IDs must be the Sender API id (e.g. "eZVD4w"), NOT the filter
- * URL slug (e.g. "g-MCSCVU"). Check Sender dashboard → Groups → copy the ID
- * shown in the URL when you open a group, or use GET /v2/groups to list them.
+ * URL slug (e.g. "g-MCSCVU"). Use GET /api/sender/groups to list real IDs.
  */
 
 type GroupKey =
@@ -52,28 +51,27 @@ export async function POST(req: NextRequest) {
 
   const { email, name, groups } = body as { email: string; name?: string; groups: GroupKey[] };
 
-  // Resolve group keys → Sender group IDs from env vars; silently skip unconfigured ones
   const groupIds: string[] = groups
     .map((key) => process.env[GROUP_ENV_MAP[key]] ?? "")
     .filter(Boolean);
 
   if (groupIds.length === 0) {
     console.warn("[sender/tag] No group IDs configured for keys:", groups);
-    console.warn("[sender/tag] Env vars present:", Object.keys(process.env).filter(k => k.startsWith("SENDER_GROUP")));
+    console.warn("[sender/tag] Env vars present:", Object.keys(process.env).filter((k) => k.startsWith("SENDER_GROUP")));
     return NextResponse.json({ success: true, note: "no_groups_configured", keys: groups });
   }
 
-  const headers = {
-    "Authorization": `Bearer ${apiKey}`,
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",
-    "Accept": "application/json",
+    Accept: "application/json",
   };
 
   const firstname = name?.split(" ")[0] || "";
   const lastname = name?.split(" ").slice(1).join(" ") || "";
 
   try {
-    // Step 1: Upsert subscriber (create if new, update if existing)
+    // Step 1: Upsert subscriber
     const upsertRes = await fetch(`${SENDER_BASE}/subscribers`, {
       method: "POST",
       headers,
@@ -82,4 +80,8 @@ export async function POST(req: NextRequest) {
     const upsertBody = await upsertRes.json().catch(() => ({}));
 
     if (!upsertRes.ok) {
-      console.error("[sender/tag] Upsert failed:", upsertRes.status, JSON.stri
+      console.error("[sender/tag] Upsert failed:", upsertRes.status, JSON.stringify(upsertBody));
+      return NextResponse.json({ error: "Sender upsert failed.", detail: upsertBody }, { status: 500 });
+    }
+
+    // Step 2: Add subscriber to each group via the dedicated en
