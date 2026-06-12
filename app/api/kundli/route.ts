@@ -115,17 +115,22 @@ async function saveLeadToSender(
 }
 
 export async function POST(req: NextRequest) {
-  const { name, birthDate, birthTime, birthLocation, email, consent } = await req.json();
+  const { name, birthDate, birthTime, birthLocation, email, consent, previewMode } = await req.json();
 
   if (!birthDate || !birthTime || !birthLocation) {
     return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
   }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return new Response(JSON.stringify({ error: "A valid email address is required." }), { status: 400 });
+
+  // Email + consent only required in full mode (not preview)
+  if (!previewMode) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return new Response(JSON.stringify({ error: "A valid email address is required." }), { status: 400 });
+    }
+    if (!consent) {
+      return new Response(JSON.stringify({ error: "Consent is required to generate your report." }), { status: 400 });
+    }
   }
-  if (!consent) {
-    return new Response(JSON.stringify({ error: "Consent is required to generate your report." }), { status: 400 });
-  }
+
   if (!process.env.GROQ_API_KEY) {
     return new Response(
       JSON.stringify({ error: "GROQ_API_KEY not configured. Add it to .env.local." }),
@@ -133,8 +138,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Save lead before streaming (fire-and-forget)
-  saveLeadToSender(email, name || "", birthDate, birthLocation);
+  // Save lead only in full mode (preview mode has no email yet)
+  if (!previewMode && email) {
+    saveLeadToSender(email, name || "", birthDate, birthLocation);
+  }
 
   const { lat, lng } = await geocode(birthLocation);
   const chartData    = await fetchProkeralaKundli(birthDate, birthTime, lat, lng, birthLocation);
