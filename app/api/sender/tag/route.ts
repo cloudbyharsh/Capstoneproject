@@ -1,26 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/**
- * POST /api/sender/tag
- *
- * Two-step approach:
- *   1. Upsert the subscriber via POST /v2/subscribers
- *   2. Add them to each group via POST /v2/subscribers/groups/{groupId}
- *      (works for both new AND existing subscribers)
- *
- * Body: { email: string; name?: string; groups: GroupKey[] }
- *
- * GroupKey values (Vercel env vars -> Sender group ID, e.g. "eZVD4w"):
- *   "kundli_lead"       -> SENDER_GROUP_KUNDLI_LEAD
- *   "report_sent"       -> SENDER_GROUP_REPORT_SENT
- *   "preview_viewed"    -> SENDER_GROUP_PREVIEW_VIEWED
- *   "unlock_clicked"    -> SENDER_GROUP_UNLOCK_CLICKED
- *   "consult_interest"  -> SENDER_GROUP_CONSULT_INTEREST
- *
- * NOTE: Group IDs must be the Sender API id (e.g. "eZVD4w"), NOT the filter
- * URL slug (e.g. "g-MCSCVU"). Use GET /api/sender/groups to list real IDs.
- */
-
 type GroupKey =
   | "kundli_lead"
   | "report_sent"
@@ -71,7 +50,6 @@ export async function POST(req: NextRequest) {
   const lastname = name?.split(" ").slice(1).join(" ") || "";
 
   try {
-    // Step 1: Upsert subscriber
     const upsertRes = await fetch(`${SENDER_BASE}/subscribers`, {
       method: "POST",
       headers,
@@ -84,4 +62,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Sender upsert failed.", detail: upsertBody }, { status: 500 });
     }
 
-    // Step 2: Add subscriber to each group via the dedicated en
+    const groupResults = await Promise.all(
+      groupIds.map(async (groupId) => {
+        const res = await fetch(`${SENDER_BASE}/subscribers/groups/${groupId}`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ subscribers: [email], trigger_automation: true }),
+        });
+        const resBody = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          console.error(`[sender/tag] Add to group ${groupId} failed:`, res.status, JSON.stringify(resBody));
+        } else {
+          console.log(`[sender/tag] Added ${email} to group ${groupId}:`, JSON.stringify(resBody));
+        }
+        return { groupId, ok: res.ok, body: resBody };
+      })
+    );
+
+    const anyFailed = groupResults.some((r) => !r.ok);
+    return NextResponse.json({ success: !anyFailed, groups: groupResults });
+  } catch (err) {
+    console.error("[sender/tag] fetch error:", err);
+    return NextResponse.json({ error: "Network error." }, { status: 500 });
+  }
+}
