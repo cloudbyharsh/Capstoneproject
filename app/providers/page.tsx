@@ -3,10 +3,12 @@ import Image from "next/image";
 import { MapPin, Globe, CheckCircle2, ArrowRight } from "lucide-react";
 import { providers } from "@/lib/utils";
 import StarRating from "@/components/ui/StarRating";
+import PageTracker from "@/components/analytics/PageTracker";
 
 export default function ProvidersPage() {
   return (
     <div className="bg-ivory min-h-screen">
+      <PageTracker event="providers_page_viewed" />
       {/* Header */}
       <div className="bg-white border-b border-ivory-dark py-12">
         <div className="layout-container px-4 md:px-12 mx-auto max-w-layout text-center">

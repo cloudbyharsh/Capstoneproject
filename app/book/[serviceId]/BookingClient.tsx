@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle2, ChevronRight } from "lucide-react";
 import { Service, Provider } from "@/lib/types";
 import Button from "@/components/ui/Button";
+import { track } from "@/lib/track";
 
 const TIME_SLOTS = ["9:00 AM", "10:30 AM", "12:00 PM", "2:00 PM", "3:30 PM", "5:00 PM"];
 
@@ -39,6 +40,20 @@ export default function BookingClient({ service, provider }: BookingClientProps)
 
   const dates = getDatesForNext14Days();
 
+  useEffect(() => {
+    track("booking_started", {
+      serviceId: service.id,
+      serviceTitle: service.title,
+      price: service.price,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    track("booking_step_viewed", { step, serviceId: service.id });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
+
   const canProceedStep1 = selectedDate && selectedTime;
   const canProceedStep2 = form.name && form.email && form.phone && form.address;
 
@@ -47,6 +62,13 @@ export default function BookingClient({ service, provider }: BookingClientProps)
   }
 
   function handleSubmit() {
+    track("booking_submitted", {
+      serviceId: service.id,
+      serviceTitle: service.title,
+      price: service.price,
+      date: formatDate(selectedDate!),
+      time: selectedTime!,
+    });
     const ref = "DEV-" + Math.random().toString(36).slice(2, 8).toUpperCase();
     router.push(
       `/confirmation?ref=${ref}&service=${encodeURIComponent(service.title)}&date=${encodeURIComponent(formatDate(selectedDate!))}&time=${encodeURIComponent(selectedTime!)}&name=${encodeURIComponent(form.name)}&price=${service.price}`

@@ -1,8 +1,10 @@
 import Button from "@/components/ui/Button";
+import PageTracker from "@/components/analytics/PageTracker";
 
 export default function AboutPage() {
   return (
     <div className="bg-ivory min-h-screen py-20 px-4">
+      <PageTracker event="about_page_viewed" />
       <div className="layout-container max-w-3xl mx-auto bg-white rounded-card shadow-card p-8 md:p-12 border border-ivory-dark/40 relative overflow-hidden">
         {/* Background Decorative Element */}
         <div className="font-devanagari text-maroon/[0.02] text-[180px] absolute -top-8 -right-8 select-none pointer-events-none font-bold">सेतु</div>

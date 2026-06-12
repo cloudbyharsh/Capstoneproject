@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Star, Shield, MapPin } from "lucide-react";
 import RotatingMandala from "./RotatingMandala";
+import { track } from "@/lib/track";
 
 const STATS = [
   { value: "50+", label: "Verified Pandits" },
@@ -44,6 +45,7 @@ export default function Hero() {
             <div className="flex flex-wrap gap-3 mb-10">
               <Link
                 href="/services"
+                onClick={() => track("hero_browse_services_clicked")}
                 className="inline-flex items-center gap-2 bg-maroon text-ivory font-label text-label-md font-medium px-6 py-3 rounded-btn hover:bg-maroon-hover transition-colors duration-300"
               >
                 Browse Services
@@ -51,6 +53,7 @@ export default function Hero() {
               </Link>
               <Link
                 href="/providers"
+                onClick={() => track("hero_meet_pandits_clicked")}
                 className="inline-flex items-center gap-2 bg-ivory border border-ivory-dark text-charcoal font-label text-label-md font-medium px-6 py-3 rounded-btn hover:border-charcoal/30 transition-colors duration-300"
               >
                 Meet Our Pandits

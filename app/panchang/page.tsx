@@ -1,6 +1,7 @@
 import { getPanchang } from "@/lib/panchang";
 import Link from "next/link";
 import { Calendar, Sun, Moon, Clock, AlertTriangle } from "lucide-react";
+import PageTracker from "@/components/analytics/PageTracker";
 
 export const revalidate = 3600;
 
@@ -24,6 +25,7 @@ export default function PanchangPage() {
 
   return (
     <div className="bg-ivory min-h-screen">
+      <PageTracker event="panchang_page_viewed" />
       <div className="bg-white border-b border-ivory-dark py-12">
         <div className="layout-container px-4 md:px-12 mx-auto max-w-layout text-center">
           <div className="inline-flex items-center gap-2 bg-saffron-tint border border-saffron/20 rounded-pill px-4 py-1.5 mb-4">

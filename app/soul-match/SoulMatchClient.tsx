@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sparkles, RotateCcw } from "lucide-react";
 import Button from "@/components/ui/Button";
+import { track } from "@/lib/track";
 
 // ── NUMEROLOGY HELPERS ──
 
@@ -142,6 +143,10 @@ export default function SoulMatchClient() {
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    track("soul_match_viewed");
+  }, []);
+
   function handleCalculate() {
     setError("");
     if (!soul1.name || !soul2.name) {
@@ -163,6 +168,12 @@ export default function SoulMatchClient() {
     const nnScore = getNNCompat(nn1, nn2);
     const dbScore = getDBScore(db);
     const total = Math.round(lpScore * 0.45 + nnScore * 0.35 + dbScore * 0.2);
+    const archetype = getArchetype(total);
+
+    track("soul_match_submitted", {
+      score: total,
+      archetype: archetype.name,
+    });
 
     setResult({
       total,
@@ -170,7 +181,7 @@ export default function SoulMatchClient() {
       nnScore,
       dbScore,
       lp1, lp2, nn1, nn2, db,
-      archetype: getArchetype(total),
+      archetype,
       soul1Name: soul1.name,
       soul2Name: soul2.name,
     });
@@ -271,7 +282,11 @@ export default function SoulMatchClient() {
               <p className="font-body text-body-md text-charcoal-muted mb-4">
                 Book a Vedic astrology consultation for a full Kundli compatibility analysis — including Guna Milan, Mangal Dosha check, and auspicious marriage timing.
               </p>
-              <Button href="/services?category=astrology" size="md">
+              <Button
+                href="/services?category=astrology"
+                size="md"
+                onClick={() => track("soul_match_book_kundli_clicked", { score: result.total, archetype: result.archetype.name })}
+              >
                 Book Kundli Matching <span className="ml-1">→</span>
               </Button>
             </div>

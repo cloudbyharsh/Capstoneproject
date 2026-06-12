@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { track } from "@/lib/track";
 import Hero from "@/components/home/Hero";
 import CategoryRow from "@/components/home/CategoryRow";
 import FeaturedServices from "@/components/home/FeaturedServices";
@@ -14,6 +15,10 @@ const IntroScreen = dynamic(() => import("@/components/home/IntroScreen"), { ssr
 
 export default function Home() {
   const [introComplete, setIntroComplete] = useState(false);
+
+  useEffect(() => {
+    track("homepage_viewed");
+  }, []);
 
   return (
     <>

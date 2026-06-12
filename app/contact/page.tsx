@@ -3,8 +3,13 @@
 import { useEffect } from "react";
 import { Mail, Phone, Sparkles } from "lucide-react";
 import Button from "@/components/ui/Button";
+import { track } from "@/lib/track";
 
 export default function ContactPage() {
+
+  useEffect(() => {
+    track("contact_page_viewed");
+  }, []);
 
   useEffect(() => {
     // Next.js SPA: Sender's universal.js runs once on initial page load and
@@ -97,7 +102,12 @@ export default function ContactPage() {
               <p className="font-body text-label-md text-ivory/80 mb-4">
                 Get your free AI-powered Vedic birth chart in under 15 seconds.
               </p>
-              <Button href="/kundli" variant="gold" size="sm">
+              <Button
+                href="/kundli"
+                variant="gold"
+                size="sm"
+                onClick={() => track("contact_kundli_cta_clicked")}
+              >
                 Try Free Kundli
               </Button>
             </div>

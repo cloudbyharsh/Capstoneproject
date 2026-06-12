@@ -1,5 +1,6 @@
 import { CheckCircle2, Calendar, Home } from "lucide-react";
 import Button from "@/components/ui/Button";
+import PageTracker from "@/components/analytics/PageTracker";
 
 export default async function ConfirmationPage({
   searchParams,
@@ -10,6 +11,10 @@ export default async function ConfirmationPage({
 
   return (
     <div className="bg-ivory min-h-screen flex items-center justify-center py-20">
+      <PageTracker
+        event="booking_confirmation_viewed"
+        props={{ serviceTitle: service ?? "", price: Number(price ?? 0) }}
+      />
       <div className="layout-container px-4 mx-auto max-w-layout">
         <div className="max-w-lg mx-auto text-center">
           <div className="w-20 h-20 bg-saffron-tint rounded-full flex items-center justify-center mx-auto mb-6">

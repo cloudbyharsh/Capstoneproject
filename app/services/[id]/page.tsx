@@ -5,6 +5,7 @@ import { getService, getProvider } from "@/lib/utils";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import StarRating from "@/components/ui/StarRating";
+import PageTracker from "@/components/analytics/PageTracker";
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -15,6 +16,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="bg-ivory min-h-screen">
+      <PageTracker event="service_detail_viewed" props={{ serviceId: id, serviceTitle: service.title, price: service.price }} />
       <div className="layout-container px-4 md:px-12 mx-auto max-w-layout py-8">
         <Link href="/services" className="inline-flex items-center gap-2 font-label text-label-md text-charcoal-muted hover:text-charcoal mb-8 transition-colors duration-300">
           <ArrowLeft size={16} />

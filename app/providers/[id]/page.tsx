@@ -4,6 +4,7 @@ import { MapPin, Globe, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { getProvider, getProviderServices } from "@/lib/utils";
 import StarRating from "@/components/ui/StarRating";
 import ServiceCard from "@/components/services/ServiceCard";
+import PageTracker from "@/components/analytics/PageTracker";
 
 export default async function ProviderProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -14,6 +15,7 @@ export default async function ProviderProfilePage({ params }: { params: Promise<
 
   return (
     <div className="bg-ivory min-h-screen">
+      <PageTracker event="provider_detail_viewed" props={{ providerId: id, providerName: provider.name }} />
       <div className="layout-container px-4 md:px-12 mx-auto max-w-layout py-8">
         <Link href="/services" className="inline-flex items-center gap-2 font-label text-label-md text-charcoal-muted hover:text-charcoal mb-8 transition-colors duration-300">
           <ArrowLeft size={16} />
