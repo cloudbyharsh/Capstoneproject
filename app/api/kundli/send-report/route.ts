@@ -54,7 +54,7 @@ function buildEmailHtml(
       <tr><td>
         <p style="font-size:16px;color:#FAF7F0;font-weight:600;margin:0 0 8px;">Ready for your complete reading?</p>
         <p style="font-size:13px;color:rgba(250,247,240,0.75);margin:0 0 20px;line-height:1.6;">Book a verified Setu astrologer for a full Jyotish report &mdash; career, relationships, timing, and personalized remedies.</p>
-        <a href="https://capstoneproject-gilt.vercel.app/services?category=astrology"
+        <a href="https://capstoneproject-gilt.vercel.app/services?category=astrology&utm_source=email&utm_medium=transactional&utm_campaign=kundli_report&utm_content=book_reading_cta"
            style="display:inline-block;background:#C4922A;color:#FAF7F0;font-size:14px;font-weight:600;padding:12px 28px;border-radius:6px;text-decoration:none;">
           Book a Full AI Reading &rarr;
         </a>
@@ -66,8 +66,8 @@ function buildEmailHtml(
     <p style="font-size:12px;color:#8a6a54;margin:0 0 6px;">&copy; 2026 Setu &middot; Sacred moments deserve better.</p>
     <p style="font-size:11px;color:#b09880;margin:0;">
       You received this because you requested a free Kundli reading at setu.app.<br/>
-      <a href="https://capstoneproject-gilt.vercel.app/unsubscribe" style="color:#C4922A;">Unsubscribe</a> &middot;
-      <a href="https://capstoneproject-gilt.vercel.app/privacy" style="color:#C4922A;">Privacy Policy</a>
+      <a href="https://capstoneproject-gilt.vercel.app/unsubscribe?utm_source=email&utm_medium=transactional&utm_campaign=kundli_report&utm_content=unsubscribe" style="color:#C4922A;">Unsubscribe</a> &middot;
+      <a href="https://capstoneproject-gilt.vercel.app/privacy?utm_source=email&utm_medium=transactional&utm_campaign=kundli_report&utm_content=privacy" style="color:#C4922A;">Privacy Policy</a>
     </p>
   </td></tr>
 
@@ -75,6 +75,41 @@ function buildEmailHtml(
 </td></tr>
 </table>
 </body></html>`;
+}
+
+// Add subscriber to Sender list + trigger automation (fire-and-forget)
+async function addSubscriberToSender(
+  apiKey: string,
+  email: string,
+  name: string,
+  birthDate: string,
+  birthLocation: string
+): Promise<void> {
+  try {
+    const groupId = process.env.SENDER_GROUP_ID;
+    await fetch("https://api.sender.net/v2/subscribers", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        firstname: name?.split(" ")[0] || "",
+        lastname: name?.split(" ").slice(1).join(" ") || "",
+        groups: groupId ? [groupId] : [],
+        tags: ["Free Kundli Lead"],
+        fields: {
+          birth_date: birthDate,
+          birth_location: birthLocation,
+          submitted_at: new Date().toISOString(),
+        },
+      }),
+    });
+  } catch (err) {
+    console.error("[send-report] Subscriber save failed:", err);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -90,6 +125,9 @@ export async function POST(req: NextRequest) {
 
   const displayName = name && name !== "Seeker" ? name : "Seeker";
   const subject = `${displayName !== "Seeker" ? `${displayName}, your` : "Your"} free Kundli reading is ready ❖`;
+
+  // Add to Sender subscriber list so automation triggers — fire-and-forget, non-blocking
+  addSubscriberToSender(apiKey, email, displayName, birthDate, birthLocation);
 
   try {
     const res = await fetch("https://api.sender.net/v2/transactional/email", {

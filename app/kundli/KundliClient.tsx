@@ -157,7 +157,11 @@ export default function KundliClient() {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ birthDate: form.birthDate, birthTime: form.birthTime, birthLocation: form.birthLocation }),
       });
-      if (res.ok) setChartData(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        setChartData(data);
+        track("kundli_chart_generated", { ascendant: data.ascendant, moonSign: data.moonSign, nakshatra: data.nakshatra?.name ?? "" });
+      }
     } catch {
       track("kundli_birth_details_error");
       setError("Could not calculate chart positions. Please check your birth details and try again.");
@@ -174,13 +178,33 @@ export default function KundliClient() {
       track("kundli_email_submission_error", { reason: "invalid_email" }); return;
     }
     track("kundli_email_submitted", { emailDomain: email.split("@")[1] ?? "" });
+
+    // Identify this session in Heap so future events are tied to the user's email
+    if (typeof window !== "undefined") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const h = (window as any).heap;
+      if (h?.identify) h.identify(email);
+      if (h?.addUserProperties) h.addUserProperties({
+        email,
+        name: form.name || "Seeker",
+        birthLocation: form.birthLocation,
+      });
+    }
+
     setSendingEmail(true); setEmailError("");
     try {
-      await fetch("/api/kundli/send-report", {
+      const res = await fetch("/api/kundli/send-report", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name: form.name || "Seeker", reading: readingRef.current || reading, birthDate: form.birthDate, birthTime: form.birthTime, birthLocation: form.birthLocation }),
       });
-    } catch { /* non-fatal */ }
+      if (res.ok) {
+        track("kundli_report_sent", { emailDomain: email.split("@")[1] ?? "" });
+      } else {
+        track("kundli_report_send_failed");
+      }
+    } catch {
+      track("kundli_report_send_failed");
+    }
     setSendingEmail(false);
     setStep("report");
   }
