@@ -100,20 +100,6 @@ function MarkdownText({ text }: { text: string }) {
   );
 }
 
-// Fire-and-forget: adds subscriber to one or more Sender automation groups.
-// Groups not yet configured in Vercel are silently ignored (returns success).
-async function tagSender(email: string, name: string, groups: string[]) {
-  try {
-    await fetch("/api/sender/tag", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, name, groups }),
-    });
-  } catch (err) {
-    console.warn("[tagSender] failed:", err);
-  }
-}
-
 export default function KundliClient() {
   const [step, setStep]           = useState<Step>("intro");
   const [form, setForm]           = useState<FormFields>({ name: "", birthDate: "", birthTime: "", birthLocation: "" });
@@ -127,10 +113,6 @@ export default function KundliClient() {
   const [emailError, setEmailError] = useState("");
   const readingRef = useRef("");
 
-  // Track funnel state so we can retroactively tag Sender when email is captured
-  const [previewViewed, setPreviewViewed]   = useState(false);
-  const [unlockClicked, setUnlockClicked]   = useState(false);
-
   const canSubmit  = !!(form.birthDate && form.birthTime && form.birthLocation.trim().length > 2);
   const validEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
@@ -141,8 +123,6 @@ export default function KundliClient() {
       report: "kundli_full_report_viewed",
     };
     if (map[step]) track(map[step]!);
-    // Record preview view so we can tag Sender once email is known
-    if (step === "preview") setPreviewViewed(true);
   }, [step]);
 
   async function startStream(name: string, birthDate: string, birthTime: string, birthLocation: string) {
@@ -211,25 +191,14 @@ export default function KundliClient() {
       });
     }
 
-    const displayName = form.name || "Seeker";
-
-    // Tag subscriber in Sender with all funnel states accumulated so far.
-    // This triggers the "subscriber added to group" automations in Sender.
-    const pendingGroups: string[] = ["kundli_lead"];
-    if (previewViewed)  pendingGroups.push("preview_viewed");
-    if (unlockClicked)  pendingGroups.push("unlock_clicked");
-    tagSender(email, displayName, pendingGroups); // fire-and-forget
-
     setSendingEmail(true); setEmailError("");
     try {
       const res = await fetch("/api/kundli/send-report", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, name: displayName, reading: readingRef.current || reading, birthDate: form.birthDate, birthTime: form.birthTime, birthLocation: form.birthLocation }),
+        body: JSON.stringify({ email, name: form.name || "Seeker", reading: readingRef.current || reading, birthDate: form.birthDate, birthTime: form.birthTime, birthLocation: form.birthLocation }),
       });
       if (res.ok) {
         track("kundli_report_sent", { emailDomain: email.split("@")[1] ?? "" });
-        // Tag report_sent → triggers "Your Kundli is ready" automation in Sender
-        tagSender(email, displayName, ["report_sent"]); // fire-and-forget
       } else {
         track("kundli_report_send_failed");
       }
@@ -356,7 +325,7 @@ export default function KundliClient() {
                 <p style={{ fontFamily: SANS, fontSize: "10px", color: BROWN_MID }}>Career &middot; Relationships &middot; Timing windows &middot; Remedies</p>
               </div>
             </div>
-            <button onClick={() => { track("kundli_unlock_report_clicked"); setUnlockClicked(true); setStep("email"); }} style={{ ...S.btnGold, marginBottom: "10px" }}>
+            <button onClick={() => { track("kundli_unlock_report_clicked"); setStep("email"); }} style={{ ...S.btnGold, marginBottom: "10px" }}>
               Unlock Full Report <ChevronRight size={16} />
             </button>
             <p style={{ fontFamily: SANS, fontSize: "11px", color: BROWN_MID, textAlign: "center" }}>Free &middot; Sent to your inbox instantly</p>
@@ -442,4 +411,21 @@ export default function KundliClient() {
         <MarkdownText text={reading} />
         <div style={{ background: WARM_IVORY, border: "0.5px solid " + BORDER, borderRadius: "12px", padding: "36px 28px", marginTop: "52px", textAlign: "center" }}>
           <p style={{ fontFamily: SANS, fontSize: "9px", color: BROWN_MID, letterSpacing: "3px", marginBottom: "16px", textTransform: "uppercase" }}>Want a Deeper Reading?</p>
-          <h3 style={{ fontFamily: SERIF, fontSize: 
+          <h3 style={{ fontFamily: SERIF, fontSize: "26px", color: BROWN, fontWeight: 400, marginBottom: "12px" }}>Consult a Verified Astrologer</h3>
+          <p style={{ fontFamily: SERIF, fontSize: "15px", color: BROWN_MID, lineHeight: "1.85", maxWidth: "420px", margin: "0 auto 28px" }}>Our experienced astrologers provide personalized guidance based on your complete birth chart and current planetary influences.</p>
+          <a href="/services?category=astrology" onClick={() => track("kundli_consult_astrologer_clicked")} style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: GOLD, color: BROWN, textDecoration: "none", borderRadius: "6px", padding: "14px 28px", fontFamily: SANS, fontSize: "14px", fontWeight: 600, letterSpacing: "0.5px", marginBottom: "14px" }}>
+            Consult an Astrologer <ChevronRight size={15} />
+          </a>
+          <br />
+          <a href="/services?category=astrology" style={{ fontFamily: SANS, fontSize: "11px", color: BROWN_MID, textDecoration: "none", letterSpacing: "1px" }}>Book a Free Discovery Call</a>
+        </div>
+        <p style={{ fontFamily: SANS, fontSize: "10px", color: BROWN_MID, lineHeight: "1.6", textAlign: "center", margin: "32px auto 0", maxWidth: "460px" }}>
+          Setu AI readings are for guidance and reflection only. Not a substitute for professional medical, financial, or legal advice.
+        </p>
+      </div>
+      <style>{CSS_SPIN}</style>
+    </div>
+  );
+
+  return null;
+}

@@ -3,20 +3,23 @@ import { NextRequest, NextResponse } from "next/server";
 /**
  * POST /api/sender/tag
  *
- * Adds (or updates) a subscriber in Sender and assigns them to one or more
- * automation groups. Each group ID maps to a Sender Group you created manually
- * in the Sender dashboard → Subscribers → Groups.
+ * Two-step approach:
+ *   1. Upsert the subscriber via POST /v2/subscribers
+ *   2. Add them to each group via POST /v2/subscribers/groups/{groupId}
+ *      (works for both new AND existing subscribers)
  *
  * Body: { email: string; name?: string; groups: GroupKey[] }
  *
- * GroupKey values (add these as Vercel env vars with the matching Sender group ID):
+ * GroupKey values (Vercel env vars → Sender group ID, e.g. "eZVD4w"):
  *   "kundli_lead"       → SENDER_GROUP_KUNDLI_LEAD
  *   "report_sent"       → SENDER_GROUP_REPORT_SENT
  *   "preview_viewed"    → SENDER_GROUP_PREVIEW_VIEWED
  *   "unlock_clicked"    → SENDER_GROUP_UNLOCK_CLICKED
  *   "consult_interest"  → SENDER_GROUP_CONSULT_INTEREST
  *
- * Returns: { success: true } on success, or an error object.
+ * NOTE: Group IDs must be the Sender API id (e.g. "eZVD4w"), NOT the filter
+ * URL slug (e.g. "g-MCSCVU"). Check Sender dashboard → Groups → copy the ID
+ * shown in the URL when you open a group, or use GET /v2/groups to list them.
  */
 
 type GroupKey =
@@ -33,6 +36,8 @@ const GROUP_ENV_MAP: Record<GroupKey, string> = {
   unlock_clicked:   "SENDER_GROUP_UNLOCK_CLICKED",
   consult_interest: "SENDER_GROUP_CONSULT_INTEREST",
 };
+
+const SENDER_BASE = "https://api.sender.net/v2";
 
 export async function POST(req: NextRequest) {
   const apiKey = process.env.SENDER_API_KEY;
@@ -53,37 +58,28 @@ export async function POST(req: NextRequest) {
     .filter(Boolean);
 
   if (groupIds.length === 0) {
-    // Groups not yet configured in Vercel — log and return success so the frontend
-    // doesn't break. Set up the env vars to activate automations.
     console.warn("[sender/tag] No group IDs configured for keys:", groups);
-    return NextResponse.json({ success: true, note: "no_groups_configured" });
+    console.warn("[sender/tag] Env vars present:", Object.keys(process.env).filter(k => k.startsWith("SENDER_GROUP")));
+    return NextResponse.json({ success: true, note: "no_groups_configured", keys: groups });
   }
+
+  const headers = {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  };
+
+  const firstname = name?.split(" ")[0] || "";
+  const lastname = name?.split(" ").slice(1).join(" ") || "";
 
   try {
-    const res = await fetch("https://api.sender.net/v2/subscribers", {
+    // Step 1: Upsert subscriber (create if new, update if existing)
+    const upsertRes = await fetch(`${SENDER_BASE}/subscribers`, {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        firstname: name?.split(" ")[0] || "",
-        lastname: name?.split(" ").slice(1).join(" ") || "",
-        groups: groupIds,
-      }),
+      headers,
+      body: JSON.stringify({ email, firstname, lastname }),
     });
+    const upsertBody = await upsertRes.json().catch(() => ({}));
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error("[sender/tag] Sender API error:", err);
-      return NextResponse.json({ error: "Sender API error." }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error("[sender/tag] fetch error:", err);
-    return NextResponse.json({ error: "Network error." }, { status: 500 });
-  }
-}
+    if (!upsertRes.ok) {
+      console.error("[sender/tag] Upsert failed:", upsertRes.status, JSON.stri
