@@ -14,10 +14,18 @@ const AREAS = [
   { key: "spirit",   label: "SPIRITUALITY",   icon: "♃" },
 ] as const;
 
+// Brand palette — Setu Brand Style Guide
+const IVORY      = "#FAF7F0";
+const WARM_IVORY = "#FCFAF5";
+const BORDER     = "#E8D5B0";
+const BROWN      = "#2C1608";
+const BROWN_MID  = "#7A5C3A";
+const GOLD       = "#C4922A";
+
 export default function TraitCards({ traits }: { traits: Traits }) {
   return (
-    <div style={{ background: "#000", padding: "24px 20px 20px" }}>
-      <p style={{ fontFamily: "Times New Roman, serif", fontSize: "9px", letterSpacing: "3px", color: "#555", marginBottom: "16px", textAlign: "center" }}>
+    <div style={{ background: IVORY, padding: "24px 20px 20px" }}>
+      <p style={{ fontFamily: "'DM Sans', Arial, sans-serif", fontSize: "9px", letterSpacing: "3px", color: BROWN_MID, marginBottom: "16px", textAlign: "center", textTransform: "uppercase" }}>
         YOUR NATURE
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
@@ -25,17 +33,18 @@ export default function TraitCards({ traits }: { traits: Traits }) {
           <div
             key={key}
             style={{
-              background: "#0a0a0a",
-              border: "0.5px solid #1e1e1e",
+              background: WARM_IVORY,
+              border: "0.5px solid " + BORDER,
+              borderRadius: "6px",
               padding: "14px 10px 12px",
               display: "flex", flexDirection: "column", gap: "6px",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              <span style={{ color: "#C4922A", fontSize: "11px", fontFamily: "serif" }}>{icon}</span>
-              <span style={{ fontFamily: "Times New Roman, serif", fontSize: "8px", letterSpacing: "2px", color: "#444" }}>{label}</span>
+              <span style={{ color: GOLD, fontSize: "11px", fontFamily: "serif" }}>{icon}</span>
+              <span style={{ fontFamily: "'DM Sans', Arial, sans-serif", fontSize: "8px", letterSpacing: "2px", color: BROWN_MID, textTransform: "uppercase" }}>{label}</span>
             </div>
-            <p style={{ fontFamily: "Times New Roman, serif", fontSize: "11px", color: "#d0d0d0", lineHeight: "1.4", margin: 0 }}>
+            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "11px", color: BROWN, lineHeight: "1.4", margin: 0 }}>
               {traits[key]}
             </p>
           </div>
