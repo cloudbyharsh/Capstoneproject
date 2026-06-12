@@ -1,7 +1,22 @@
+"use client";
+
+import { useEffect } from "react";
 import { Mail, Phone, Sparkles } from "lucide-react";
 import Button from "@/components/ui/Button";
 
 export default function ContactPage() {
+
+  useEffect(() => {
+    // Next.js SPA navigation means the global Sender script has already
+    // finished its initial DOM scan before this div exists. Re-calling
+    // sender() forces it to re-scan and render the embedded form.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    if (typeof w.sender === "function") {
+      w.sender("1a295a76183580");
+    }
+  }, []);
+
   return (
     <div className="bg-ivory min-h-screen">
       {/* Header */}
@@ -65,7 +80,7 @@ export default function ContactPage() {
           </div>
 
           {/* Sender embedded form */}
-          <div className="lg:col-span-3 bg-white rounded-card shadow-card p-8 border border-ivory-dark/40">
+          <div className="lg:col-span-3 bg-white rounded-card shadow-card p-8 border border-ivory-dark/40 min-h-[400px]">
             <div
               style={{ textAlign: "left" }}
               className="sender-form-field"
