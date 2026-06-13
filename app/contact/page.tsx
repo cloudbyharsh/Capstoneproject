@@ -115,9 +115,15 @@ export default function ContactPage() {
 
           {/* Sender embedded form */}
           <div className="lg:col-span-3 bg-white rounded-card shadow-card p-8 border border-ivory-dark/40 min-h-[400px]">
-            <style>{`
-              /* Force Sender form to fill the container */
-              .sender-form-field,
-              .sender-form-field > div,
-              .sender-form-field form,
-              .sender-form-field
+            <div
+              style={{ textAlign: "left" }}
+              className="sender-form-field"
+              data-sender-form-id="b4xjAk"
+            />
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
